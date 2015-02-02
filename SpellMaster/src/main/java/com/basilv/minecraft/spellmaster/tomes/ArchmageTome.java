@@ -72,6 +72,8 @@ public class ArchmageTome extends Tome {
 			return false;
 		}
 
+		// TODO: On success do announcement to world that new archmage 
+		
 		return true;		
 	}
 	

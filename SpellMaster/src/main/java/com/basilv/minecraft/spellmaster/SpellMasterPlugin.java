@@ -34,10 +34,12 @@ import com.basilv.minecraft.spellmaster.spells.WallOfStoneSpell;
 import com.basilv.minecraft.spellmaster.spells.WallOfWaterSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.ControlWeatherSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.CreateSnowGolemSpell;
+import com.basilv.minecraft.spellmaster.spells.experimental.GreaterTeleportSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.LightSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.SummonZombieSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.TeleportSpell;
 import com.basilv.minecraft.spellmaster.tomes.AirMagicTome;
+import com.basilv.minecraft.spellmaster.tomes.ArchmageTome;
 import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.tomes.FireMagicTome;
 import com.basilv.minecraft.spellmaster.tomes.IntroductorySpellcastingTome;
@@ -135,11 +137,15 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 		
 		FireMagicTome fireTome = registerTome(new FireMagicTome());
 		wizardTome.addTome(fireTome);
-		
 		// Ignite: convert air block to fire, revert back after duration ends?
 		// Lava burst
 		// Fireball
 		// Flamewall
+		
+		ArchmageTome archmageTome = new ArchmageTome();
+		wizardTome.addTome(archmageTome);
+		
+		archmageTome.addSpell(new GreaterTeleportSpell());
 		
 		
 //		logger.info(ItemType.BlueOrchid.getMachineName());
@@ -250,6 +256,7 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 		logger.info("Block type = " + block.getType().getMachineName() + " id = " + block.getType().getId() + " data = " + block.getType().getData());
 		if (block.getBlockBase() != null) {
 			logger.info("block base localized name = " + block.getBlockBase().getLocalizedName());
+			logger.info("block base collidable?" + block.getBlockBase().isCollidable());
 		}
 		logger.info("Block data = " + block.getData());
 		for (BlockProperty key : block.getPropertyKeys()) {

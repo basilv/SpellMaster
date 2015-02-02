@@ -17,7 +17,7 @@ public class TeleportSpell extends Spell {
 
 	public TeleportSpell() {
 		super("Teleport");
-		setCastingMinimumLevel(2); 
+		setCastingMinimumLevel(20); 
 		setCastingFocus("Iron boots", ItemType.IronBoots); // TODO: Figure out focus, components 
 	}
 
