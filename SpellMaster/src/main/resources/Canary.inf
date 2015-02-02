@@ -1,0 +1,5 @@
+main-class = com.basilv.minecraft.spellmaster.SpellMasterPlugin
+name = SpellMaster
+author = Basil Vandegriend
+version = 0.1
+
