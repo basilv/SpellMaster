@@ -44,11 +44,11 @@ public abstract class Spell extends NamedObject {
 	}
 
 	/**
-	 * @param itemType Must not be null.
 	 * @param itemDescription Must not be null.
+	 * @param itemType Must not be null.
 	 * @param numberConsumed May be null to indicate that the component is not consumed.
 	 */
-	public final void setCastingComponent(ItemType itemType, String itemDescription, Integer numberConsumedPerCast) {
+	public final void setCastingComponent(String itemDescription, ItemType itemType, Integer numberConsumedPerCast) {
 		this.castingComponent = new MagicComponent(itemDescription, itemType, numberConsumedPerCast); 
 	}
 	

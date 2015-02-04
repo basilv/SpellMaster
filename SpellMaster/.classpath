@@ -12,7 +12,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Basil/Dropbox/Dev/Minecraft/server/CanaryMod-1.8.0-1.2.0-RC1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_25">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

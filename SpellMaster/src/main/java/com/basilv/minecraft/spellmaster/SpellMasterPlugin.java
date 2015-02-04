@@ -35,6 +35,7 @@ import com.basilv.minecraft.spellmaster.spells.WallOfWaterSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.ControlWeatherSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.CreateSnowGolemSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.GreaterTeleportSpell;
+import com.basilv.minecraft.spellmaster.spells.experimental.GuidedMissileSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.LightSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.SummonZombieSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.TeleportSpell;
@@ -125,7 +126,7 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 		WizardTome wizardTome = registerTome(new WizardTome());
 		introTome.addTome(wizardTome);
 		wizardTome.addSpell(new TeleportSpell());
-		// Teleport?
+		wizardTome.addSpell(new GuidedMissileSpell());
 		
 		AirMagicTome airTome = registerTome(new AirMagicTome());
 		wizardTome.addTome(airTome);
@@ -142,7 +143,7 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 		// Fireball
 		// Flamewall
 		
-		ArchmageTome archmageTome = new ArchmageTome();
+		ArchmageTome archmageTome = registerTome(new ArchmageTome());
 		wizardTome.addTome(archmageTome);
 		
 		archmageTome.addSpell(new GreaterTeleportSpell());
@@ -288,7 +289,12 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 				command = parameterList.removeFirst();
 			}
 		
+			// TODO: Switch to subcommand method.
+			
 			switch (command) {
+			case "listAllTomes":
+				executeListAllTomesCommand(player);
+				break;
 			case "obtainBook":
 				executeObtainBookCommand(player, parameterList);
 				break;
@@ -310,6 +316,12 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 				player.chat("bookInfo <book> : Log information on the ceremony to obtain the specified book.");
 				break;
 			}
+		}
+	}
+
+	private void executeListAllTomesCommand(Player player) {
+		for (Tome tome : TomeRegistry.getTomes()) {
+			player.chat(tome.getName());
 		}
 	}
 

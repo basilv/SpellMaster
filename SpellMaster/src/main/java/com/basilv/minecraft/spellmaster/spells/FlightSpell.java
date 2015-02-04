@@ -24,7 +24,7 @@ public class FlightSpell extends Spell {
 		super("Flight");
 		setCastingMinimumLevel(20);
 		setCastingFocus("2 Feathers", ItemType.Feather);
-		setCastingComponent(ItemType.Feather, "Feather", 2); // TODO: Consider using more exotic item?
+		setCastingComponent("Feather", ItemType.Feather, 2); // TODO: Consider using more exotic item?
 		// TODO: Should there be a greater spell cost?
 	}
 	

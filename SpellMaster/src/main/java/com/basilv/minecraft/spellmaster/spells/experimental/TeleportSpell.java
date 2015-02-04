@@ -17,7 +17,7 @@ public class TeleportSpell extends Spell {
 
 	public TeleportSpell() {
 		super("Teleport");
-		setCastingMinimumLevel(20); 
+		setCastingMinimumLevel(0); // TODO: FIX to 20 
 		setCastingFocus("Iron boots", ItemType.IronBoots); // TODO: Figure out focus, components 
 	}
 
@@ -39,6 +39,7 @@ public class TeleportSpell extends Spell {
 
 		Player player = context.getPlayer();
 		int range = context.getCastingRange(-100, 0.10);
+		range = 100; // TODO: REMOVE
 		Position positionAdjustment = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
 		// Issue with player.teleportTo is that post-teleport, player facing is always SOUTH and can't seem to be changed. 
 		// TeleportTo will also put player into a solid block, while translate won't.

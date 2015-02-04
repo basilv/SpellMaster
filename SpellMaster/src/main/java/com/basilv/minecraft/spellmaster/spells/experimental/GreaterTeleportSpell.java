@@ -41,7 +41,7 @@ public class GreaterTeleportSpell extends Spell {
 
 		Player player = context.getPlayer();
 		int range = context.getCastingRange(-300, 0.05);
-		range = 300; // TODO: REMOVE
+		range = 200; // TODO: REMOVE
 		Position positionAdjustment = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
 		positionAdjustment.setX(positionAdjustment.getBlockX() * range);
 		positionAdjustment.setZ(positionAdjustment.getBlockZ() * range);
@@ -71,15 +71,26 @@ public class GreaterTeleportSpell extends Spell {
 		// Translate works with the correct facing but refuses to teleport into a solid block
 		// TODO: Some issues observed with using translate in straight tunnels - sometimes need a third block above clear (air) at the target square and jump before teleporting.
 		// Adding a small y adjustment up doesn't help with the need to jump.
+		
+		// TODO: Teleport (call to translate) occasionally messes up, e.g. if cast multiple times quickly, or if range is large (>=200 confirmed). 
+		// Ensuring chunk loaded did not work to fix the problem.
+//		boolean loaded = world.isChunkLoaded(position.getBlockX() >> 4, position.getBlockZ() >> 4);
+//		log("Destination chunk loaded = " + loaded);
+//		if (!loaded) {
+//			world.loadChunk(position.getBlockX() >> 4, position.getBlockZ() >> 4);
+//		}
+		
 		Vector3D vector = new Vector3D(positionAdjustment.getBlockX(), yAdjustment, positionAdjustment.getBlockZ());
 		player.translate(vector);
+		
+		// TODO: Damage focus?
 		
 	    return true;
 	}
 	
 	private boolean isSolid(Block block) {
-		
-		return (block.getBlockBase().isCollidable());
+		// TODO: Treats water as not solid.
+		return block.getBlockMaterial().isSolid();
 	}
 	
 }

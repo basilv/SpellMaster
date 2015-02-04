@@ -23,7 +23,7 @@ public class SummonZombieSpell extends Spell {
 		super("Summon Zombie");
 		setCastingMinimumLevel(5);
 		setCastingFocus("Rotten flesh", ItemType.RottenFlesh); 
-		setCastingComponent(ItemType.RottenFlesh, "Rotten Flesh", 2); 
+		setCastingComponent("Rotten Flesh", ItemType.RottenFlesh, 2); 
 	}
 
 	@Override

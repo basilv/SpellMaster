@@ -25,7 +25,7 @@ public class AcidErosionSpell extends Spell {
 		super("Acid Erosion");
 		setCastingMinimumLevel(3);
 		setCastingFocus("Ink Sack", ItemType.InkSack);
-		setCastingComponent(ItemType.InkSack, "Ink Sack", 1); 
+		setCastingComponent("Ink Sack", ItemType.InkSack, 1); 
 	}
 	
 	@Override

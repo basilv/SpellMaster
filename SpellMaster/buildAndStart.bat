@@ -9,7 +9,7 @@
 @REM Need cmd because mvn.bat kills current shell upon completion
 cmd /c mvn package
 
-set MINECRAFT_SERVER=..\server
+set MINECRAFT_SERVER=..\..\..\..\Dropbox\Dev\Minecraft\server
 
 copy target\SpellMaster-*.jar %MINECRAFT_SERVER%\plugins
 
