@@ -1,9 +1,7 @@
 package com.basilv.minecraft.spellmaster;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
@@ -26,13 +24,9 @@ public class MagicContext {
 		this.player = player;
 		this.blockClicked = blockClicked;
 		
-		tomes = new ArrayList<>(Tome.getTomesInPlayerInventory(player));
-		Collections.sort(tomes, new Comparator<Tome>() {
-			@Override
-			public int compare(Tome first, Tome second) {
-				return Integer.valueOf(first.getTomeLevel()).compareTo(Integer.valueOf(second.getTomeLevel()));
-			}
-		});
+		tomes = Tome.getTomesInPlayerInventory(player).stream()
+			.sorted((first, second) -> Integer.valueOf(first.getTomeLevel()).compareTo(Integer.valueOf(second.getTomeLevel())))
+			.collect(Collectors.toList());
 		spells = Tome.getSpellsFromTomes(tomes);
 		spellboost = new SpellBoost(tomes);
 	}
@@ -75,6 +69,9 @@ public class MagicContext {
 
 	@SuppressWarnings("rawtypes") 
 	public int countTomesPlayerHas(Class... tomeClasses) {
+
+		// TODO: write test first
+//		Arrays.stream(tomeClasses).filter(clazz -> doesPlayerHaveTome(clazz)).count();
 		
 		int count = 0;
 		for (Class clazz : tomeClasses) {
@@ -86,12 +83,7 @@ public class MagicContext {
 	}
 	
 	public boolean doesPlayerHaveTome(@SuppressWarnings("rawtypes") Class clazz) {
-		for (Tome tome : tomes) {
-			if (clazz.getCanonicalName().equals(tome.getClass().getCanonicalName())) {
-				return true;
-			}
-		}
-		return false;
+		return tomes.stream().anyMatch(tome -> clazz.getCanonicalName().equals(tome.getClass().getCanonicalName()));
 	}
 	
 }

@@ -10,7 +10,6 @@ import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.World;
-import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.effects.SoundEffect;
 import net.canarymod.api.world.position.Position;
 
@@ -67,14 +66,6 @@ public class LightningBoltSpell extends Spell {
 		world.makeLightningBolt(originPosition);
 
 		final int originDamage = calculateDamageAtOriginPoint(context);
-
-		// TODO
-//		List<Integer> transactionsIds = 
-//			    transactions.stream()
-//			                .filter(t -> t.getType() == Transaction.GROCERY)
-//			                .sorted(comparing(Transaction::getValue).reversed())
-//			                .map(Transaction::getId)
-//			                .collect(toList());
 		world.getEntityLivingList().stream().forEach(entity -> damageEntity(entity, player, originPosition, originDamage)); 			
 		
 		return true;

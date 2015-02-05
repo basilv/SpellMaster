@@ -1,12 +1,14 @@
 package com.basilv.minecraft.spellmaster;
 
-import com.basilv.minecraft.spellmaster.util.ChangeInventoryTask;
+import java.util.Arrays;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.inventory.PlayerInventory;
+
+import com.basilv.minecraft.spellmaster.util.ChangeInventoryTask;
 
 public class MagicComponent {
 
@@ -34,20 +36,12 @@ public class MagicComponent {
 			return true;
 		}
 					
-		int itemCount = 0;
-		for (Item item : inventory.getContents()) {
-			if (item == null) {
-				continue;
-			}
-			if (item.getType().equals(itemType)) {
-				itemCount += item.getAmount();
-				if (itemCount >= numberConsumed) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		int itemCount = Arrays.stream(inventory.getContents())
+			.filter(item -> item != null && item.getType().equals(itemType))
+			.mapToInt(Item::getAmount)
+			.sum();
+		return itemCount >= numberConsumed;
+		
 	}
 
 	public void consumeForUse(Player player) {

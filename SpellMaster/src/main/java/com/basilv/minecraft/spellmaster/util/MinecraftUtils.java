@@ -8,8 +8,6 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.inventory.PlayerInventory;
-import net.canarymod.api.nbt.CanaryListTag;
-import net.canarymod.api.nbt.CanaryStringTag;
 import net.canarymod.api.nbt.ListTag;
 import net.canarymod.api.nbt.StringTag;
 import net.canarymod.api.world.World;
@@ -23,13 +21,35 @@ import net.canarymod.chat.ChatFormat;
 public class MinecraftUtils {
 
 	public static long secondsToTicks(long seconds) {
+		// TODO: Consider using Canary.getServer().getTicksPerSecond()
+
 		long millisPerTick = 50;
 		long ticks = seconds * 1000 / millisPerTick;
 		return ticks;
 	}
 
 	public static Item createWrittenBookWithContent(String title, List<List<String>> pagesOfTextLines, List<String> loreTextLines) {
-	    Item item = Canary.factory().getItemFactory().newItem(ItemType.WrittenBook);
+		// TODO: Unable to unit test this logic because of the following error.
+		
+		// Unable to directly create new CanaryItem because of the following error:
+//		java.lang.SecurityException: sealing violation: can't seal package net.canarymod.api.inventory: already loaded
+//		at java.net.URLClassLoader.getAndVerifyPackage(URLClassLoader.java:401)
+//		at java.net.URLClassLoader.defineClass(URLClassLoader.java:423)
+//		at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+//		at java.net.URLClassLoader$1.run(URLClassLoader.java:367)
+//		at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
+//		at java.security.AccessController.doPrivileged(Native Method)
+//		at java.net.URLClassLoader.findClass(URLClassLoader.java:360)
+//		at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+//		at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+//		at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+//		at com.basilv.minecraft.spellmaster.util.MinecraftUtils.createWrittenBookWithContent(MinecraftUtils.java:40)
+//		Item item =  new CanaryItem(ItemType.WrittenBook.getId(), 1);
+
+//		java.lang.NullPointerException
+//		at net.canarymod.Canary.factory(Canary.java:221)
+//		at com.basilv.minecraft.spellmaster.util.MinecraftUtils.createWrittenBookWithContent(MinecraftUtils.java:32)
+		Item item = Canary.factory().getItemFactory().newItem(ItemType.WrittenBook);
 		item.setDisplayName(title); // This must be first, before populating the data tag, since it creates the data tag.
 
 		item.getDataTag().put("pages", constructPages(title, pagesOfTextLines));
@@ -75,7 +95,7 @@ public class MinecraftUtils {
     	final int maxLineCountPerPage = 13;
     	final int maxLineLength = 22;
 
-		ListTag<StringTag> listTag = new CanaryListTag<>();
+		ListTag<StringTag> listTag = Canary.factory().getNBTFactory().newListTag();
 	    boolean firstPage = true;
 	    for (List<String> page : pagesOfTextLines) {
 			StringBuffer stringData = new StringBuffer();
@@ -95,7 +115,7 @@ public class MinecraftUtils {
 	    		for (String wrappedLine : wrappedLines) {
 	    			if (lineCount >= maxLineCountPerPage) {
 		    			// Store current page and start new page
-		    		    listTag.add(new CanaryStringTag(stringData.toString()));
+		    		    listTag.add(Canary.factory().getNBTFactory().newStringTag(stringData.toString()));
 		    		    stringData = new StringBuffer();
 		    		    lineCount = 0;
 	    			}
@@ -107,7 +127,7 @@ public class MinecraftUtils {
 		    		stringData.append(wrappedLine);
 	    		}
 	    	}
-    		listTag.add(new CanaryStringTag(stringData.toString()));
+    		listTag.add(Canary.factory().getNBTFactory().newStringTag(stringData.toString()));
 	    }
 		return listTag;
 	}
