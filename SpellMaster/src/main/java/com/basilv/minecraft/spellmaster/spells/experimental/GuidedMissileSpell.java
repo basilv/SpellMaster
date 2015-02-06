@@ -21,7 +21,7 @@ public class GuidedMissileSpell extends Spell {
 		setCastingMinimumLevel(0); // TODO: FIX to 10? 
 		setCastingFocus("Arrow", ItemType.Arrow); // TODO: Figure out focus, components
 		setCastingComponent("Arrow", ItemType.Arrow, 1);
-		// TODO: Switch to rain of arrows?
+		// TODO: Switch to rain of arrows???
 	}
 
 	@Override
