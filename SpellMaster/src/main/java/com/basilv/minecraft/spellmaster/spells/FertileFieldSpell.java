@@ -9,6 +9,7 @@ import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
+import net.canarymod.api.world.blocks.properties.BlockProperty;
 import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicComponent;
@@ -31,6 +32,7 @@ public class FertileFieldSpell extends Spell {
 		   "Harvest crops (if any) and convert the ground into fertile soil with seeds planted. "
 		   + "This is done in the direction you are facing for each block within range at the level you are standing on. "
 		   + "Converting blocks to dirt and planting seeds consumes these items from your inventory. "
+		   + "The seeds growth is accelerated using bonemeal from your inventory. "
 		   + "The spell requires roughly 50% more seeds than what you plant. Extra seeds are sometimes scattered by the spell."
 		));
 	}
@@ -44,6 +46,9 @@ public class FertileFieldSpell extends Spell {
 		
 		int playerSeedsCount = MinecraftUtils.countItemsOfType(player, ItemType.Seeds);
 		int playerSeedsConsumed = 0;
+
+		int playerBonemealCount = MinecraftUtils.countItemsOfType(player, ItemType.Bonemeal);
+		int playerBonemealConsumed = 0;
 
 		Item itemHeld = player.getItemHeld();
 		int maxDamage = itemHeld.getBaseItem().getMaxDamage();
@@ -71,6 +76,7 @@ public class FertileFieldSpell extends Spell {
 			}
 			if (BlockType.Crops.equals(blockAboveType) || BlockType.Carrots.equals(blockAboveType) || BlockType.Potatoes.equals(blockAboveType)) {
 				blockAbove.dropBlockAsItem(true);
+				blockAbove.update();
 				stop = false;
 			}
 			
@@ -127,14 +133,17 @@ public class FertileFieldSpell extends Spell {
 			}
 			playerSeedsConsumed+=seedsNeeded; 
 			world.setBlockAt(position, BlockType.Crops);
-			
-			// TODO: Add in growing seeds based on bone powder? See http://minecraft.gamepedia.com/Seeds for what looks like data values?
-			// The below does not work.
-//			Block block = world.getBlockAt(position);
-//			BlockProperty property = block.getPropertyForName("age");
-//			// Property is not null
-//			block.setPropertyValue(property, Integer.valueOf(7));
-			
+
+			// Grow wheat based on bone meal.
+			int maxAge = 7;
+			int maxBonemealUsed = 4; // maxAge divided by 2 rounded up
+			int bonemealToUse = Math.min(playerBonemealCount - playerBonemealConsumed, maxBonemealUsed);
+			int age = Math.min(bonemealToUse * 2, maxAge);
+			playerBonemealConsumed += bonemealToUse;
+			Block block = world.getBlockAt(position);
+			BlockProperty property = block.getPropertyForName("age");
+			block.setPropertyValue(property, Integer.valueOf(age));
+			block.update();
 		}
 		
 		MinecraftUtils.setItemHeldDamage(player, currentDamage);
@@ -145,6 +154,9 @@ public class FertileFieldSpell extends Spell {
 
 		MagicComponent seedsComponent = new MagicComponent("Seeds", ItemType.Seeds, playerSeedsConsumed);
 		seedsComponent.consumeForUse(player);
+
+		MagicComponent bonemealComponent = new MagicComponent("Bone meal", ItemType.Bonemeal, playerBonemealConsumed);
+		bonemealComponent.consumeForUse(player);
 
 		return true;
 	}

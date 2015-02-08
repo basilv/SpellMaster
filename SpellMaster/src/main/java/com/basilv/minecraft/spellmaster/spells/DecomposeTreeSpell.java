@@ -46,11 +46,9 @@ public class DecomposeTreeSpell extends Spell {
 			return false;
 		}
 
-		// TODO: Apply max range to block clicked?
-		
 		Item itemHeld = context.getItemHeld();
 		int maxDamage = itemHeld.getBaseItem().getMaxDamage();
-		int currentDamage = itemHeld.getDamage();
+		float currentDamage = itemHeld.getDamage();
 		int maxTreeBlocksDecomposed = context.getCastingLevel() * 2;
 		int treeBlocksDecomposed = 0;
 
@@ -66,7 +64,11 @@ public class DecomposeTreeSpell extends Spell {
 			if (currentDamage >= maxDamage) {
 				break;
 			}
-			currentDamage++;
+			if (isLeafBlock(currentBlock.getType())) {
+				currentDamage += 0.2; // Do less damage to item if a leaf block
+			} else {
+				currentDamage++;
+			}
 			currentBlock.dropBlockAsItem(true);
 			treeBlocksDecomposed++;
 			if (treeBlocksDecomposed == maxTreeBlocksDecomposed) {
@@ -76,29 +78,49 @@ public class DecomposeTreeSpell extends Spell {
 			// Populate neighbors.  
 			for (BlockFace face : faces) {
 				Block block = currentBlock.getFacingBlock(face);
-				// TODO: Add tree blocks first, reduce item damage for leaves or don't disintegrate leaves?
-				if (isTreeBlock(block.getType())) {
+				if (isWoodBlock(block.getType())) {
+					treeBlocks.addFirst(block);
+				}
+				if (isLeafBlock(block.getType())) {
 					treeBlocks.add(block);
 				}
 			}
 		}
 
-		MinecraftUtils.setItemHeldDamage(context.getPlayer(), currentDamage);
+		MinecraftUtils.setItemHeldDamage(context.getPlayer(), (int)currentDamage);
 		
 		return (treeBlocksDecomposed > 0);
 	}
 
-	private static Set<BlockType> treeBlocks = new HashSet<>(Arrays.asList(
-			BlockType.AcaciaLeaves, BlockType.AcaciaLog,
-			BlockType.BirchLeaves, BlockType.BirchLog,
-			BlockType.DarkOakLeaves, BlockType.DarkOakLog,
-			BlockType.JungleLeaves, BlockType.JungleLog,
-			BlockType.OakLeaves, BlockType.OakLog,
-			BlockType.PineLeaves, BlockType.PineLog
+	private static Set<BlockType> leafBlocks = new HashSet<>(Arrays.asList(
+			BlockType.AcaciaLeaves, 
+			BlockType.BirchLeaves, 
+			BlockType.DarkOakLeaves, 
+			BlockType.JungleLeaves, 
+			BlockType.OakLeaves, 
+			BlockType.PineLeaves 
 		));
 
+	private static Set<BlockType> woodBlocks = new HashSet<>(Arrays.asList(
+			BlockType.AcaciaLog,
+			BlockType.BirchLog,
+			BlockType.DarkOakLog,
+			BlockType.JungleLog,
+			BlockType.OakLog,
+			BlockType.PineLog
+		));
+
+
 	private boolean isTreeBlock(BlockType type) {
-		return treeBlocks.contains(type);
+		return isWoodBlock(type) || isLeafBlock(type);
+	}
+	
+	private boolean isWoodBlock(BlockType type) {
+		return woodBlocks.contains(type);
+	}
+
+	private boolean isLeafBlock(BlockType type) {
+		return leafBlocks.contains(type);
 	}
 
 }

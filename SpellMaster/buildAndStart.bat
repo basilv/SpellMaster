@@ -10,7 +10,7 @@
 cmd /c mvn package
 if %ERRORLEVEL% GEQ 1 exit /B %ERRORLEVEL%
 
-set MINECRAFT_SERVER=..\..\..\..\Dropbox\Dev\Minecraft\server
+set MINECRAFT_SERVER=..\..\Minecraft\server
 
 copy target\SpellMaster-*.jar %MINECRAFT_SERVER%\plugins
 
