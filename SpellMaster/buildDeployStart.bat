@@ -6,14 +6,10 @@
 
 @echo off
 
-@REM Need cmd because mvn.bat kills current shell upon completion
-cmd /c mvn package
+cmd /c buildDeploy.bat
 if %ERRORLEVEL% GEQ 1 exit /B %ERRORLEVEL%
 
 set MINECRAFT_SERVER=..\..\Minecraft\server
-
-copy target\SpellMaster-*.jar %MINECRAFT_SERVER%\plugins
-
 cmd /c startServer.bat %MINECRAFT_SERVER%
 
 

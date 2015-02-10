@@ -104,10 +104,14 @@ public abstract class Spell extends NamedObject {
 	 * @param player Cannot be null
 	 */
 	protected void applyCastingCost(MagicContext context) {
+		
+		// TODO: Have each element have a slightly different cost. Earth = more exhaustive. Nature = less damaging. Fire = set on fire.
+		
 		// The idea behind this cost is to have restrictions on repeated castings, especially in combat when taking damage
 		// Using lots of spells will require more food, another balancing point to prevent overuse at the start of the game before
 		// the player has amassed significant food resources.
 		
+		// TODO: Use context with spellboost effects for exhaustion level and maybe health cost?
 		// This will spend one level of saturation / hunger, more exhausting than any other action in the game.
 		Player player = context.getPlayer();
 		player.setExhaustion(player.getExhaustionLevel() + 4);

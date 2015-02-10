@@ -43,10 +43,9 @@ public class IntroductorySpellcastingTome extends Tome {
 
 	}
 
-	// This tome never appears as a ceremony in another tome.
 	@Override
 	public String getCeremonyName() {
-		return null;
+		return "Apprenticeship";
 	}
 
 	@Override

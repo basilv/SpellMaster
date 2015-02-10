@@ -18,7 +18,8 @@ public class WizardTome extends Tome {
 	public WizardTome() {
 		super("Wizard's Way", 2);
 		setCeremonyFocus("Book", ItemType.Book);
-		setCeremonyComponent("Iron Block", ItemType.IronBlock, 1);
+		setCeremonyComponent("Iron Block", ItemType.IronBlock, 1); // TODO: Will this be interfered by the Sense Ore spell?
+		// TODO: Add spell exhaustion boost
 		setSpellBoost(new SpellBoost(1, 0, 0, 0));
 	}
 
@@ -54,7 +55,7 @@ public class WizardTome extends Tome {
 	@Override
 	protected boolean isCeremonyConditionsSpecificToTomeMet(MagicContext context) {
 
-		int tomesPossessed = context.countTomesPlayerHas(EarthMagicTome.class, NatureMagicTome.class, WaterMagicTome.class);
+		long tomesPossessed = context.countTomesPlayerHas(EarthMagicTome.class, NatureMagicTome.class, WaterMagicTome.class);
 		Player player = context.getPlayer();
 		if (tomesPossessed < 2) {
 			sendPlayerUnableToPerformCeremonyMessage(player, "Must possess required tomes.");

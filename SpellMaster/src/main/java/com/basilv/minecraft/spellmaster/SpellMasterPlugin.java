@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -17,6 +18,7 @@ import net.canarymod.commandsys.Command;
 import net.canarymod.commandsys.CommandDependencyException;
 import net.canarymod.commandsys.CommandListener;
 import net.canarymod.hook.HookHandler;
+import net.canarymod.hook.player.ConnectionHook;
 import net.canarymod.hook.player.ItemUseHook;
 import net.canarymod.hook.player.PlayerRespawnedHook;
 import net.canarymod.logger.Logman;
@@ -48,12 +50,9 @@ import com.basilv.minecraft.spellmaster.tomes.NatureMagicTome;
 import com.basilv.minecraft.spellmaster.tomes.WaterMagicTome;
 import com.basilv.minecraft.spellmaster.tomes.WizardTome;
 
-// TODO: Put into GitHub
-// TODO: Set up Maven build?
-
 public class SpellMasterPlugin extends Plugin implements CommandListener, PluginListener {
 
-	public Logman logger;
+	private final Logman logger;
 
 	public SpellMasterPlugin() {
 		logger = getLogman();
@@ -61,6 +60,7 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 
 	@Override
 	public boolean enable() {
+		logger.info("Enabling SpellMaster plugin");
 		Canary.hooks().registerListener(this, this);
 		try {
 			Canary.commands().registerCommands(this, this, false);
@@ -68,12 +68,17 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 			logger.error("Duplicate command name", e);
 		}
 		
+		setupTomesAndSpells();
+		
+		return true;
+	}
+
+	private void setupTomesAndSpells() {
 		IntroductorySpellcastingTome introTome = registerTome(new IntroductorySpellcastingTome());
 		
 		// Create light spell with focus: sunflower or stick (YellowFlower item type)
 		// Higher level books reuse stick, but with more powerful spell?
 		
-		// TODO: Move elsewhere
 		introTome.addSpell(new LightSpell()); // TODO: Probably remove
 		introTome.addSpell(new SummonZombieSpell());
 		introTome.addSpell(new CreateSnowGolemSpell());
@@ -145,15 +150,7 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 		
 		ArchmageTome archmageTome = registerTome(new ArchmageTome());
 		wizardTome.addTome(archmageTome);
-		
 		archmageTome.addSpell(new GreaterTeleportSpell());
-		
-		
-//		logger.info(ItemType.BlueOrchid.getMachineName());
-//		logger.info(ItemType.LightBlueDye.getMachineName());
-//		logger.info(ItemType.Banner);
-		
-		return true;
 	}
 
 	private static <T extends Tome> T registerTome(T tome) {
@@ -165,9 +162,19 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 	public void disable() {
 	}
 
+	@HookHandler // TODO: Test
+	public void onPlayerConnection(ConnectionHook hook) {
+		if (hook.isFirstConnection()) {
+			welcomePlayer(hook.getPlayer());
+		}
+	}
+	
 	@HookHandler
 	public void onPlayerSpawn(PlayerRespawnedHook hook) {
-		Player player = hook.getPlayer();
+		welcomePlayer(hook.getPlayer());
+	}
+
+	private void welcomePlayer(Player player) {
 		String tomeName = IntroductorySpellcastingTome.NAME;
 		TomeRegistry.getTomeForName(tomeName).giveTomeToPlayer(player);
 
@@ -178,39 +185,62 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 
 	@HookHandler
 	public void onInteract(ItemUseHook event) {
-		
 		Player player = event.getPlayer();
 		Item itemHeld = player.getItemHeld();
 		MagicContext context = new MagicContext(player, event.getBlockClicked());
-		
+
+		logger.info("Handling player " + player.getName() + " using item " + itemHeld.getDisplayName());
+		// TODO: Test
 		// First try to cast known spells
-		for (Spell spell : context.getSpells()) {
-			// If have focus for spell, then try to cast and stop trying anything else.
-			if (spell.canCastSpellWithHeldItem(itemHeld)) {
-				spell.tryCastSpell(context);
-				return;
-			}
+		Optional<Spell> spellOptional = context.getSpells().stream()
+			.filter(spell -> spell.canCastSpellWithHeldItem(itemHeld))
+			.findFirst();
+		if (spellOptional.isPresent()) {
+			// TODO: Getting two events - cancelling one doesn't help. Why!!!
+			logger.info("Trying to cast spell " + spellOptional.get().getName()); // TODO:REMOVE
+			spellOptional.get().tryCastSpell(context);
+			event.setCanceled();
+			return;
 		}
+
+//		for (Spell spell : context.getSpells()) {
+//			// If have focus for spell, then try to cast and stop trying anything else.
+//			if (spell.canCastSpellWithHeldItem(itemHeld)) {
+//				spell.tryCastSpell(context);
+//				return;
+//			}
+//		}
 		
 		// If no spell was castable, try invoking known ceremonies
-		boolean invokedCeremony = false;
-		for (Tome book : context.getTomes()) {
-			for (Ceremony ceremony : book.getCeremonies()) {
-				// TODO: Pass context into spells and ceremonies.
-				if (ceremony.tryPerformCeremony(context)) {
-					player.chat("Performed ceremony " + ceremony.getName());
-					invokedCeremony = true;
-					break;
-				}
-			}
-			if (invokedCeremony) {
-				break;
-			}
+		Optional<Ceremony> ceremonyOptional = context.getTomes().stream()
+			.flatMap(tome -> tome.getCeremonies().stream())
+			.filter(ceremony -> ceremony.tryPerformCeremony(context))
+			.findFirst();
+		if (ceremonyOptional.isPresent()) {
+			player.chat("Performed ceremony " + ceremonyOptional.get().getName());
+			return;
 		}
+
+		TomeRegistry.getTomeForName(IntroductorySpellcastingTome.NAME).tryPerformCeremony(context);
 		
-		if (!invokedCeremony) {
-			invokedCeremony = TomeRegistry.getTomeForName(IntroductorySpellcastingTome.NAME).tryPerformCeremony(context);
-		}
+//		boolean invokedCeremony = false;
+//		for (Tome book : context.getTomes()) {
+//			for (Ceremony ceremony : book.getCeremonies()) {
+//				// TODO: Pass context into spells and ceremonies.
+//				if (ceremony.tryPerformCeremony(context)) {
+//					player.chat("Performed ceremony " + ceremony.getName());
+//					invokedCeremony = true;
+//					break;
+//				}
+//			}
+//			if (invokedCeremony) {
+//				break;
+//			}
+//		}
+		
+//		if (!invokedCeremony) {
+//			invokedCeremony = TomeRegistry.getTomeForName(IntroductorySpellcastingTome.NAME).tryPerformCeremony(context);
+//		}
 	}
 	
 

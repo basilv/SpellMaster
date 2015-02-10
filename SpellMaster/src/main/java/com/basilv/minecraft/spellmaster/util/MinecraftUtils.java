@@ -67,8 +67,8 @@ public class MinecraftUtils {
 	}
 
 	private static List<String> constructLore(List<String> loreTextLines) {
-		List<String> loreWrappedLines = new ArrayList<>();
 		final int maxLoreLineLength = 39;
+		List<String> loreWrappedLines = new ArrayList<>();
 		for (String line : loreTextLines) {
 			loreWrappedLines.addAll(wrapText(line, maxLoreLineLength));
 		}
@@ -144,6 +144,7 @@ public class MinecraftUtils {
 				PlayerInventory inventory = player.getInventory();
 				if (inventory.getEmptySlot() == -1) {
 					player.chat("No space in inventory for item " + item.getDisplayName());
+					return;
 				}
 				inventory.addItem(item);
 				inventory.update();

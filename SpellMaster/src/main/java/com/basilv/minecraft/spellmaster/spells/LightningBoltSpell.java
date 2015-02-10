@@ -22,7 +22,7 @@ public class LightningBoltSpell extends Spell {
 	public LightningBoltSpell() {
 		super("Lightning Bolt");
 		setCastingMinimumLevel(10);
-		setCastingFocus("Nether quartz", ItemType.NetherQuartz); // TODO: Figure out different focus. Nether quartz?
+		setCastingFocus("Nether quartz", ItemType.NetherQuartz); 
 		setCastingComponent("Redstone", ItemType.RedStone, 3);
 	}
 
@@ -46,8 +46,7 @@ public class LightningBoltSpell extends Spell {
 
 		Player player = context.getPlayer();
 		boolean includeAir = false;
-		BlockIterator sightItr = new BlockIterator(new LineTracer(player),
-				includeAir);
+		BlockIterator sightItr = new BlockIterator(new LineTracer(player), includeAir);
 		if (!sightItr.hasNext()) {
 			sendPlayerUnableToCastMessage(player,
 					"Only targetting air - must target a non-air block");

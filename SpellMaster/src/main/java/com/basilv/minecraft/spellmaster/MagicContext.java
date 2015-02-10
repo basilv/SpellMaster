@@ -1,5 +1,6 @@
 package com.basilv.minecraft.spellmaster;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,18 +69,17 @@ public class MagicContext {
 	}
 
 	@SuppressWarnings("rawtypes") 
-	public int countTomesPlayerHas(Class... tomeClasses) {
+	public long countTomesPlayerHas(Class... tomeClasses) {
 
-		// TODO: write test first
-//		Arrays.stream(tomeClasses).filter(clazz -> doesPlayerHaveTome(clazz)).count();
+		return Arrays.stream(tomeClasses).filter(clazz -> doesPlayerHaveTome(clazz)).count();
 		
-		int count = 0;
-		for (Class clazz : tomeClasses) {
-			if (doesPlayerHaveTome(clazz)) {
-				count++;
-			}
-		}
-		return count;
+//		int count = 0;
+//		for (Class clazz : tomeClasses) {
+//			if (doesPlayerHaveTome(clazz)) {
+//				count++;
+//			}
+//		}
+//		return count;
 	}
 	
 	public boolean doesPlayerHaveTome(@SuppressWarnings("rawtypes") Class clazz) {

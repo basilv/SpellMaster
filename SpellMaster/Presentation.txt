@@ -1,0 +1,25 @@
+
+Intro to Minecraft the Game
+	/spawn test1_NORMAL (or use single-player game)
+	/home
+
+Intro to CanaryMod server
+	Intro to Programming Minecraft Book
+	Teaching Kids Programming
+
+Intro to SpellMaster plugin
+	Game Design
+
+Development-Related Topics
+
+	Maven, Eclipse, Git, GitHub
+
+	Unit Testing Challenges
+
+	Domain-Driven Development
+
+	Java 8 Streams
+		MagicContext
+		SpellMasterPlugin.onInteract()
+		
+	Applying Agile

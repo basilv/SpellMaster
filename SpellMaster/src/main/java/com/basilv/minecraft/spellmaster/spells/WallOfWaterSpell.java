@@ -76,6 +76,9 @@ public class WallOfWaterSpell extends Spell {
 		EndWallTask task = new EndWallTask(context.getWorld(), blockPositionsToRevert, durationInSeconds);
 	    Canary.getServer().addSynchronousTask(task);
 		
+	    // Damage shovel once each time spell is cast.
+		MinecraftUtils.setItemHeldDamage(player, player.getItemHeld().getDamage()+1);
+	    
 		return true;
 	}
 

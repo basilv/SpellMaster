@@ -22,7 +22,7 @@ public class FertileFieldSpell extends Spell {
 	public FertileFieldSpell() {
 		super("Fertile Field");
 		setCastingMinimumLevel(3);
-		setCastingFocus("Wooden hoe", ItemType.WoodHoe); 
+		setCastingFocus("Wooden hoe", ItemType.StoneHoe); // TODO: For testing 
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class FertileFieldSpell extends Spell {
 	}
 
 	@Override
-	protected boolean createCastingGameEffect(MagicContext context) {
+	protected boolean createCastingGameEffect(MagicContext context) { 
 
 		Player player = context.getPlayer();
 		int playerDirtCount = MinecraftUtils.countItemsOfType(player, ItemType.Dirt);
@@ -53,6 +53,7 @@ public class FertileFieldSpell extends Spell {
 		Item itemHeld = player.getItemHeld();
 		int maxDamage = itemHeld.getBaseItem().getMaxDamage();
 		int currentDamage = itemHeld.getDamage();
+		currentDamage++;	// Do 1 damage to focus each time spell is cast.
 		
 		// Calculate direction to disintegrate in
 		Position positionAdjustment = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
@@ -128,13 +129,14 @@ public class FertileFieldSpell extends Spell {
 			// having the spell generate extra seeds.
 			position.moveY(+1);
 			int seedsNeeded = randomNumberWithinRange(1, 2);
+			log("Seeds consumed = " + playerSeedsConsumed + " seeds needed = " + seedsNeeded + " player seed count = " + playerSeedsCount); // TODO: REMOVE
 			if (playerSeedsConsumed + seedsNeeded > playerSeedsCount) {
 				break;
 			}
 			playerSeedsConsumed+=seedsNeeded; 
 			world.setBlockAt(position, BlockType.Crops);
 
-			// Grow wheat based on bone meal.
+			// Grow wheat based on bone meal if it is available
 			int maxAge = 7;
 			int maxBonemealUsed = 4; // maxAge divided by 2 rounded up
 			int bonemealToUse = Math.min(playerBonemealCount - playerBonemealConsumed, maxBonemealUsed);
@@ -149,11 +151,11 @@ public class FertileFieldSpell extends Spell {
 		MinecraftUtils.setItemHeldDamage(player, currentDamage);
 		
 		// Consume components
-		MagicComponent dirtComponent = new MagicComponent("Dirt", ItemType.Dirt, playerDirtConsumed);
-		dirtComponent.consumeForUse(player);
-
 		MagicComponent seedsComponent = new MagicComponent("Seeds", ItemType.Seeds, playerSeedsConsumed);
 		seedsComponent.consumeForUse(player);
+
+		MagicComponent dirtComponent = new MagicComponent("Dirt", ItemType.Dirt, playerDirtConsumed);
+		dirtComponent.consumeForUse(player);
 
 		MagicComponent bonemealComponent = new MagicComponent("Bone meal", ItemType.Bonemeal, playerBonemealConsumed);
 		bonemealComponent.consumeForUse(player);

@@ -56,7 +56,7 @@ public class ArchmageTome extends Tome {
 	protected boolean isCeremonyConditionsSpecificToTomeMet(MagicContext context) {
 
 		// TODO: Add Necromancy Tome.
-		int tomesPossessed = context.countTomesPlayerHas(AirMagicTome.class, FireMagicTome.class);
+		long tomesPossessed = context.countTomesPlayerHas(AirMagicTome.class, FireMagicTome.class);
 		Player player = context.getPlayer();
 		if (tomesPossessed < 2) {
 			sendPlayerUnableToPerformCeremonyMessage(player, "Must possess required tomes.");

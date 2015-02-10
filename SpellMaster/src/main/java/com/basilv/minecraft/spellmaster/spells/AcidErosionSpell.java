@@ -123,9 +123,7 @@ public class AcidErosionSpell extends Spell {
 		}
 
 	    public void doTask() {
-	    	for (Position position : waterPositions) {
-	    		world.setBlockAt(position, BlockType.Air);
-	    	}
+	    	waterPositions.stream().forEach(position -> world.setBlockAt(position, BlockType.Air));
 	    }
 	}
 	

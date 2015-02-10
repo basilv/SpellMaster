@@ -1,9 +1,9 @@
 package com.basilv.minecraft.spellmaster.tomes;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
@@ -66,17 +66,12 @@ public class NatureMagicTome extends Tome {
 		if (itemHeld == null || !flowers.contains(itemHeld.getType())) {
 			return false;
 		}
-		Set<ItemType> flowersInInventory = new HashSet<>();
-		flowersInInventory.add(itemHeld.getType());
 		
-		for (Item item : player.getInventory().getContents()) {
-			if (item != null && flowers.contains(item.getType())) {
-				flowersInInventory.add(item.getType());
-				if (flowersInInventory.size() >= flowersForCeremonyCount) {
-					break;
-				}
-			}
-		}
+		Set<ItemType> flowersInInventory = Arrays.stream(player.getInventory().getContents())
+			.filter(item -> item != null && flowers.contains(item.getType()))
+			.map(item -> item.getType())
+			.limit(flowersForCeremonyCount)
+			.collect(Collectors.toSet());
 		
 		if (flowersInInventory.size() < flowersForCeremonyCount) {
 			sendPlayerUnableToPerformCeremonyMessage(player, "You only have " + flowersInInventory.size() + " types of flowers.");

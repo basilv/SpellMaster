@@ -1,11 +1,12 @@
 package com.basilv.minecraft.spellmaster;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
@@ -23,29 +24,24 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 	// TODO: Have id used to identify tome in minecraft item tag different from book display name.
 
 	public static Set<Tome> getTomesInPlayerInventory(Player player) {
-		Set<Tome> tomes = new HashSet<>();
-		for (Item item : player.getInventory().getContents()) {
-			if (item == null) {
-				continue;
-			}
-			if (ItemType.WrittenBook.equals(item.getType())) {
-				if (item.getDataTag().containsKey(TOME_NAME_DATA_TAG)) {
-					String tomeName = item.getDataTag().getString(TOME_NAME_DATA_TAG);
-					Tome tome = TomeRegistry.getTomeForName(tomeName);
-					tomes.add(tome);
-				}
-			}
-		}
+		
+		Set<Tome> tomes = Arrays.stream(player.getInventory().getContents())
+			.filter(item -> item != null 
+				&& ItemType.WrittenBook.equals(item.getType())
+				&& item.getDataTag().containsKey(TOME_NAME_DATA_TAG) )
+			.map(item -> { 
+				String tomeName = item.getDataTag().getString(TOME_NAME_DATA_TAG);
+				return TomeRegistry.getTomeForName(tomeName); 
+			})
+			.collect(Collectors.toSet());
 		
 		return tomes;
 	}
 
 	public static List<Spell> getSpellsFromTomes(Collection<Tome> tomes) {
-		List<Spell> spells = new ArrayList<>();
-		for (Tome tome : tomes) {
-			spells.addAll(tome.getSpells());
-		}
-		return spells;
+		return tomes.stream()
+			.flatMap(tome -> tome.getSpells().stream())
+			.collect(Collectors.toList());
 	}
 	
 	private final int tomeLevel;
@@ -107,13 +103,10 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 			pages.add(intro);
 		}
 		
-		for (Spell spell : spells) {
-			pages.add(spell.createBookPage());
-		}
+		spells.forEach(spell -> pages.add(spell.createBookPage()));
+
+		ceremonies.forEach(ceremony -> pages.add(ceremony.createBookPage())); 
 		
-		for (Ceremony ceremony : ceremonies) {
-			pages.add(ceremony.createBookPage()); 
-		}
 		Item item = MinecraftUtils.createWrittenBookWithContent(getName(), pages, null);
 		item.getDataTag().put(TOME_NAME_DATA_TAG, getName());
 		
@@ -260,8 +253,9 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 		player.chat("Unable to perform ceremony: " + reason);
 	}
 	
+	private final Logger logger = Logger.getLogger(getClass().getName());
 	protected final void log(String message) {
-		Logger.getLogger(getClass().getName()).info(message);
+		logger.info(message);
 	}
 
 }

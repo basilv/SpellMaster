@@ -19,7 +19,6 @@ import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 public class SenseOreSpell extends Spell {
 
 	private Map<ItemType,BlockType> blockTypeForItemHeld = new HashMap<>();
-	
 
 	public SenseOreSpell() {
 		super("Sense Ore");
