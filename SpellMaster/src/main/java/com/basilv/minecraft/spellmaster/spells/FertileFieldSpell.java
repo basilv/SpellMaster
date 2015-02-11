@@ -22,7 +22,7 @@ public class FertileFieldSpell extends Spell {
 	public FertileFieldSpell() {
 		super("Fertile Field");
 		setCastingMinimumLevel(3);
-		setCastingFocus("Wooden hoe", ItemType.StoneHoe); // TODO: For testing 
+		setCastingFocus("Wood Hoe", ItemType.WoodHoe); 
 	}
 	
 	@Override
@@ -33,7 +33,6 @@ public class FertileFieldSpell extends Spell {
 		   + "This is done in the direction you are facing for each block within range at the level you are standing on. "
 		   + "Converting blocks to dirt and planting seeds consumes these items from your inventory. "
 		   + "The seeds growth is accelerated using bonemeal from your inventory. "
-		   + "The spell requires roughly 50% more seeds than what you plant. Extra seeds are sometimes scattered by the spell."
 		));
 	}
 
@@ -124,12 +123,8 @@ public class FertileFieldSpell extends Spell {
 			}
 
 			// Plant seeds. 
-			// Consume 1.5 seeds because sometimes an extra seed (dropped as an item) is generated for each block that has a seed planted.
-			// This happens somewhat randomly (not all the time), so the best compromise seems to be to consume 1.5 seeds to avoid 
-			// having the spell generate extra seeds.
 			position.moveY(+1);
-			int seedsNeeded = randomNumberWithinRange(1, 2);
-			log("Seeds consumed = " + playerSeedsConsumed + " seeds needed = " + seedsNeeded + " player seed count = " + playerSeedsCount); // TODO: REMOVE
+			int seedsNeeded = 1;
 			if (playerSeedsConsumed + seedsNeeded > playerSeedsCount) {
 				break;
 			}

@@ -1,10 +1,13 @@
 package com.basilv.minecraft.spellmaster;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -187,19 +190,22 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 	public void onInteract(ItemUseHook event) {
 		Player player = event.getPlayer();
 		Item itemHeld = player.getItemHeld();
+		
+		if (isDuplicateEvent(event)) {
+			return;
+		}
+		
+		// TODO: Getting two events only for hoes (wooden or stone)
+		logger.info("Handling player " + player.getName() + " using item " + itemHeld.getDisplayName());
+		
 		MagicContext context = new MagicContext(player, event.getBlockClicked());
 
-		logger.info("Handling player " + player.getName() + " using item " + itemHeld.getDisplayName());
-		// TODO: Test
 		// First try to cast known spells
 		Optional<Spell> spellOptional = context.getSpells().stream()
 			.filter(spell -> spell.canCastSpellWithHeldItem(itemHeld))
 			.findFirst();
 		if (spellOptional.isPresent()) {
-			// TODO: Getting two events - cancelling one doesn't help. Why!!!
-			logger.info("Trying to cast spell " + spellOptional.get().getName()); // TODO:REMOVE
 			spellOptional.get().tryCastSpell(context);
-			event.setCanceled();
 			return;
 		}
 
@@ -243,6 +249,27 @@ public class SpellMasterPlugin extends Plugin implements CommandListener, Plugin
 //		}
 	}
 	
+
+	private static final ConcurrentHashMap<String,LocalTime> playerUuidLastEventMap = new ConcurrentHashMap<>();
+
+	// Workaround for issue with two ItemUseHook events being invoked by a single right-click of a wooden or stone hoe.
+	private boolean isDuplicateEvent(ItemUseHook event) {
+		String key = event.getPlayer().getUUIDString();
+		
+		LocalTime lastEvent = playerUuidLastEventMap.get(key);
+		LocalTime now = LocalTime.now();
+		playerUuidLastEventMap.put(key, now);
+		
+		if (lastEvent != null) {
+			Duration duration = Duration.between(lastEvent, now);
+			if (duration.toMillis() < 100) {
+				logger.info("Duplicate item use event for player " + event.getPlayer().getName() + " using item " + event.getItem().getDisplayName());
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	// TODO: For debugging.
 	@Command(aliases = { "inspectItem" }, description = "spellmaster plugin inspect item", permissions = { "*" }, toolTip = "/spellmaster")
