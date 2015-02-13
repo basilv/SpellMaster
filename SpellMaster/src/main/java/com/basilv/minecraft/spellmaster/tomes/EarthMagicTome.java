@@ -10,22 +10,49 @@ import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
+import com.basilv.minecraft.spellmaster.Spell;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.DisintegrateEarthSpell;
+import com.basilv.minecraft.spellmaster.spells.SenseOreSpell;
+import com.basilv.minecraft.spellmaster.spells.WallOfStoneSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class EarthMagicTome extends Tome {
 
+	public static abstract class EarthSpell extends Spell {
+		
+		public EarthSpell(String name) {
+			super(name);
+		}
+
+		@Override
+		protected float getCastingExhaustionCost() {
+			return 6;  
+		}
+		
+	}
+	
 	public EarthMagicTome() {
 		super("Earth Magic", 1);
 		setCeremonyFocus("Stone pickaxe that is heavily damaged (red level)", ItemType.StonePickaxe);
 		setCeremonyComponent("Stone pickaxe", ItemType.StonePickaxe, 9);
 		setSpellBoost(new SpellBoost(0, 0, 0, 1));
+		
+		addSpell(new DisintegrateEarthSpell());
+		addSpell(new WallOfStoneSpell());
+		addSpell(new SenseOreSpell());
+		
+		// TODO: Add spells
+		// Flatten area
+		// Create bridge
 	}
 
 	@Override
 	protected List<String> getBookIntroduction() {
-		return Arrays.asList("Evoke the power of the earth.", "", "Boost: +1 second duration"); 
+		return Arrays.asList("Evoke the power of the earth."
+			, "", "Due to the solidity and inflexibility of earth these spells are more exhausting than normal to cast. "
+			, "", "Boost: +1 second duration"); 
 	}
 
 	@Override

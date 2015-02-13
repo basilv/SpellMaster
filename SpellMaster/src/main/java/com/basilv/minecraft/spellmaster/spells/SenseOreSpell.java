@@ -13,10 +13,10 @@ import net.canarymod.api.world.effects.SoundEffect;
 import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class SenseOreSpell extends Spell {
+public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 
 	private Map<ItemType,BlockType> blockTypeForItemHeld = new HashMap<>();
 

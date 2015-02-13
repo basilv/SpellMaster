@@ -12,6 +12,8 @@ import net.canarymod.api.world.position.Position;
 import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.experimental.GuidedMissileSpell;
+import com.basilv.minecraft.spellmaster.spells.experimental.TeleportSpell;
 
 public class WizardTome extends Tome {
 
@@ -21,6 +23,16 @@ public class WizardTome extends Tome {
 		setCeremonyComponent("Iron Block", ItemType.IronBlock, 1); // TODO: Will this be interfered by the Sense Ore spell?
 		// TODO: Add spell exhaustion boost
 		setSpellBoost(new SpellBoost(1, 0, 0, 0));
+		
+		// TODO: Experimental spells
+		// use armor for different effects: chestplate - invulnerability, boots - teleport, etc.
+
+		addSpell(new TeleportSpell());
+		addSpell(new GuidedMissileSpell());
+
+		addTome(new AirMagicTome());
+		addTome(new FireMagicTome());
+		addTome(new ArchmageTome());
 	}
 
 	@Override

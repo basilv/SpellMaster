@@ -15,6 +15,11 @@ public class IntroductorySpellcastingTome extends Tome {
 	public IntroductorySpellcastingTome() {
 		super(NAME, 0);
 		setCeremonyFocus("Paper", ItemType.Paper);
+		
+		addTome(new NatureMagicTome());
+		addTome(new EarthMagicTome());
+		addTome(new WaterMagicTome());
+		addTome(new WizardTome());
 	}
 
 	@Override
@@ -32,7 +37,7 @@ public class IntroductorySpellcastingTome extends Tome {
 				"Each spell has a minimum level below which you will be unable to cast the spell. "
 				+ "To cast a spell requires a focus: holding a particular item and using it (e.g. a right-click). "
 				+ "Many spells require one or more components in your inventory that are consumed each time the spell is cast. "
-				+ "Every spell inflicts a cost when cast. Most spells cost one health and four points of exhaustion (roughly two points of hunger). "
+				+ "Every spell inflicts a cost when cast, which is typically a little bit of health and exhaustion. "
 				+ "Many aspects of a spell such as the range over which it operates or the damage dealt increase with your level.",
 				"", "Magic Tomes", "",
 				"Tomes can contain any combination of the following:",

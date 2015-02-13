@@ -15,11 +15,11 @@ import net.canarymod.api.world.effects.SoundEffect.Type;
 import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.WaterMagicTome.WaterSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 import com.basilv.minecraft.spellmaster.util.OneTimeServerTask;
 
-public class WallOfWaterSpell extends Spell {
+public class WallOfWaterSpell extends WaterSpell {
 
 	public WallOfWaterSpell() {
 		super("Wall of Water");

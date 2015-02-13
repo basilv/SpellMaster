@@ -69,7 +69,7 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 		return ceremonies;
 	}
 
-	public void addCeremony(Ceremony ceremony) {
+	private void addCeremony(Ceremony ceremony) {
 		ceremonies.add(ceremony);
 	}
 	
@@ -85,17 +85,17 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 		return spells;
 	}
 	
-	public void addSpell(Spell spell) {
+	public final void addSpell(Spell spell) {
 		spells.add(spell);
 	}
 	
-	public void giveTomeToPlayer(Player player) {
+	public final void giveTomeToPlayer(Player player) {
 		Item item = createBook();
 		MinecraftUtils.giveItemToPlayer(player, item);
 	}
 
 	
-	protected Item createBook() {
+	protected final Item createBook() {
 		List<List<String>> pages = new ArrayList<>();
 		
 		List<String> intro = getBookIntroduction();
@@ -113,12 +113,18 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 		return item;
 	}
 
-	protected List<String> getBookIntroduction() {
-		return null; // No introduction by default
-	}
+	/**
+	 * @return lines of text for the introduction page(s) of this tome, or null if there is no introduction.
+	 */
+	protected abstract List<String> getBookIntroduction();
 
-	public void addTome(Tome tome) {
+	/**
+	 * Add the specified tome to this tome as a ceremony and register the tome.
+	 * @param tome
+	 */
+	public final void addTome(Tome tome) {
 		addCeremony(tome.createCeremony());
+		TomeRegistry.addTome(tome);
 	}
 
 	/**

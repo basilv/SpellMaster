@@ -14,10 +14,10 @@ import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.effects.SoundEffect;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.NatureMagicTome.NatureSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class DecomposeTreeSpell extends Spell {
+public class DecomposeTreeSpell extends NatureSpell {
 
 	public DecomposeTreeSpell() {
 		super("Decompose Tree");

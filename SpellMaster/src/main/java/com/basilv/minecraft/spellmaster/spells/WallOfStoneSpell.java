@@ -13,10 +13,10 @@ import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicComponent;
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class WallOfStoneSpell extends Spell {
+public class WallOfStoneSpell extends EarthMagicTome.EarthSpell {
 
 	public WallOfStoneSpell() {
 		super("Wall of Stone");

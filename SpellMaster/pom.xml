@@ -15,14 +15,27 @@
   </repositories>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-        </configuration>
-      </plugin>
+		<plugin>
+		  <artifactId>maven-compiler-plugin</artifactId>
+		  <version>3.1</version>
+		  <configuration>
+		      <source>1.8</source>
+		      <target>1.8</target>
+		  </configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+				<!-- Needed to get Maven to write the implementation version to the jar manifest. -->
+				<archive>
+					<manifest>
+						<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+					</manifest>
+				</archive>
+			</configuration>
+		</plugin>      
     </plugins>
   </build>
   <dependencies>

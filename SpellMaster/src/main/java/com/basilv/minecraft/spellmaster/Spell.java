@@ -112,16 +112,24 @@ public abstract class Spell extends NamedObject {
 		// the player has amassed significant food resources.
 		
 		// TODO: Use context with spellboost effects for exhaustion level and maybe health cost?
-		// This will spend one level of saturation / hunger, more exhausting than any other action in the game.
 		Player player = context.getPlayer();
-		player.setExhaustion(player.getExhaustionLevel() + 4);
+		player.setExhaustion(player.getExhaustionLevel() + getCastingExhaustionCost());
 		
-		// Regenerating will cost almost another level of saturation / hunger. And can't regenerate if hunger level is below 18.
-		player.setHealth(player.getHealth() - 1);
+		player.setHealth(player.getHealth() - getCastingHealthCost());
 
 		if (castingComponent != null) {
 			castingComponent.consumeForUse(player);
 		}
+	}
+
+	protected float getCastingHealthCost() {
+		// Regenerating this one health will cost almost a full level of saturation / hunger. And can't regenerate if hunger level is below 18.
+		return 1;
+	}
+
+	protected float getCastingExhaustionCost() {
+		// This will spend one level of saturation / hunger, more exhausting than any other action in the game.
+		return 4;
 	}
 
 	/**

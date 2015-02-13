@@ -14,10 +14,10 @@ import net.canarymod.api.world.effects.Particle;
 import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class DisintegrateEarthSpell extends Spell {
+public class DisintegrateEarthSpell extends EarthMagicTome.EarthSpell {
 
 	public DisintegrateEarthSpell() {
 		super("Disintegrate Earth");

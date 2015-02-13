@@ -12,6 +12,7 @@ import net.canarymod.api.world.position.Position;
 import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.experimental.GreaterTeleportSpell;
 
 public class ArchmageTome extends Tome {
 
@@ -20,6 +21,9 @@ public class ArchmageTome extends Tome {
 		setCeremonyFocus("Book", ItemType.Book);
 		setCeremonyComponent("Diamond Block", ItemType.DiamondBlock, 1); 
 		setSpellBoost(new SpellBoost(2, 1, 1, 2));
+		
+		addSpell(new GreaterTeleportSpell());
+		// TODO: majestic mansion spell?
 	}
 
 	@Override

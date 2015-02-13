@@ -14,10 +14,10 @@ import net.canarymod.api.world.position.Position;
 
 import com.basilv.minecraft.spellmaster.MagicComponent;
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.NatureMagicTome.NatureSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class FertileFieldSpell extends Spell {
+public class FertileFieldSpell extends NatureSpell {
 
 	public FertileFieldSpell() {
 		super("Fertile Field");
