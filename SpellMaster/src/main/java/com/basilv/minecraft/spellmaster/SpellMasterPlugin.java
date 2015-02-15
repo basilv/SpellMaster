@@ -25,6 +25,7 @@ import com.basilv.minecraft.spellmaster.tomes.IntroductorySpellcastingTome;
 public class SpellMasterPlugin extends Plugin implements PluginListener {
 
 	private final Logman logger;
+	private SpellExhaustionTask spellExhaustionTask;
 
 	public SpellMasterPlugin() {
 		logger = getLogman();
@@ -43,6 +44,9 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 		} catch (CommandDependencyException e) {
 			logger.error("Duplicate command name", e);
 		}
+
+		spellExhaustionTask = new SpellExhaustionTask();
+		Canary.getServer().addSynchronousTask(spellExhaustionTask);
 		
 		IntroductorySpellcastingTome introTome = new IntroductorySpellcastingTome();
 		TomeRegistry.addTome(introTome);
@@ -58,6 +62,7 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 
 	@Override
 	public void disable() {
+		Canary.getServer().removeSynchronousTask(spellExhaustionTask);
 	}
 
 	@HookHandler // TODO: Test

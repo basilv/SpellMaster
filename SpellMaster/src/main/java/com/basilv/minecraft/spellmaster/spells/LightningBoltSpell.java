@@ -94,14 +94,14 @@ public class LightningBoltSpell extends Spell {
 			// TODO: Entities killed by this spell are not dropping experience. Maybe need to specify attacker?
 //				entity.setLastAssailant(player); // TODO: Try this. Not working, made mob jump towards player (one of the 2 commented-out commands did)
 //				entity.setAttackTarget(player);
-			log ("Entity health before = " + entity.getHealth()); // TODO
+			logger.info("Entity health before = " + entity.getHealth()); // TODO
 			entity.setRevengeTarget(player);
 			if (damage > entity.getHealth()) {
 				entity.destroy();
 			} else {
 				entity.dealDamage(DamageType.LIGHTNINGBOLT, damage);
 			}
-			log ("Entity health after = " + entity.getHealth()); // TODO
+			logger.info("Entity health after = " + entity.getHealth()); // TODO
 
 		}
 	}

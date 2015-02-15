@@ -73,7 +73,7 @@ public class LightSpell extends Spell {
 
 	    public void doTask() {
 			world.setLightLevelOnBlockMap(position.getBlockX(), position.getBlockY(), position.getBlockZ(), lightLevel);
-			log("Light level to " + lightLevel); // TODO:REMOVE
+			logger.info("Light level to " + lightLevel); // TODO:REMOVE
 			world.getBlockAt(position).update();
 	    }
 	}

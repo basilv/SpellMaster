@@ -39,7 +39,7 @@ public class AirMagicTome extends Tome {
 		super("Air Magic", 2);
 		setCeremonyFocus("Feather", ItemType.Feather); 
 		setCeremonyComponent("Feather", ItemType.Feather, 32);
-		setSpellBoost(new SpellBoost(0, 0, 1, 0));
+		setSpellBoost(new SpellBoost(0, 0, 1, 0, 0));
 		
 		addSpell(new ControlWeatherSpell());
 		addSpell(new LightningBoltSpell());

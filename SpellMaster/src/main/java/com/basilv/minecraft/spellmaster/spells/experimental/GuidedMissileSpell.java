@@ -56,11 +56,11 @@ public class GuidedMissileSpell extends Spell {
 		livingEntity.setFireTicks((int)MinecraftUtils.secondsToTicks(2));
 		int damage = 10; // TODO
 		// TODO: Solve problem of not getting experience (see Lighting Bolt spell)
-		log("Entity health " + livingEntity.getHealth());
+		logger.info("Entity health " + livingEntity.getHealth());
 		// TODO: Was dealing damage as damage type lightning bolt, switching back to arrow damage type
 		livingEntity.dealDamage(DamageType.ARROW, damage);
 		livingEntity.setArrowCountInEntity(livingEntity.getArrowCountInEntity()+1);
-		log("Entity health after " + livingEntity.getHealth());
+		logger.info("Entity health after " + livingEntity.getHealth());
 		if (livingEntity.getHealth() <= 0) {
 			livingEntity.destroy();
 		}

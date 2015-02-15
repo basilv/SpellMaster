@@ -18,6 +18,8 @@ import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 
+	// TODO: Might be too powerful to put into Earth Magic Tome - put into ArchmageTome??? Drastically increase casting cost???
+	
 	private Map<ItemType,BlockType> blockTypeForItemHeld = new HashMap<>();
 
 	public SenseOreSpell() {

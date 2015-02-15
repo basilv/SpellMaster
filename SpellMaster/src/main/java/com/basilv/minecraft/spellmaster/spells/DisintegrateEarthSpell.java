@@ -79,7 +79,7 @@ public class DisintegrateEarthSpell extends EarthMagicTome.EarthSpell {
 			}
 
 			block.dropBlockAsItem(true);
-			spawnParticle(player, block.getLocation(), Particle.Type.SPELL_INSTANT);
+			context.spawnParticle(block.getLocation(), Particle.Type.SPELL_INSTANT);
 			
 			// Cause damage to tool
 			currentDamage++;

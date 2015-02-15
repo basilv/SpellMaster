@@ -21,8 +21,7 @@ public class WizardTome extends Tome {
 		super("Wizard's Way", 2);
 		setCeremonyFocus("Book", ItemType.Book);
 		setCeremonyComponent("Iron Block", ItemType.IronBlock, 1); // TODO: Will this be interfered by the Sense Ore spell?
-		// TODO: Add spell exhaustion boost
-		setSpellBoost(new SpellBoost(1, 0, 0, 0));
+		setSpellBoost(new SpellBoost(1, 0, 0, 0, 1));
 		
 		// TODO: Experimental spells
 		// use armor for different effects: chestplate - invulnerability, boots - teleport, etc.
@@ -32,13 +31,14 @@ public class WizardTome extends Tome {
 
 		addTome(new AirMagicTome());
 		addTome(new FireMagicTome());
+		// TODO: Necromany tome
 		addTome(new ArchmageTome());
 	}
 
 	@Override
 	protected List<String> getBookIntroduction() {
 		return Arrays.asList("Learn more powerful magic as a wizard."
-			,"" , "Boost: +1 casting level"); 
+			,"" , "Boost: +1 casting level, -1 exhaustion"); 
 	}
 
 	@Override

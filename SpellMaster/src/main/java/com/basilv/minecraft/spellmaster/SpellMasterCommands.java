@@ -87,6 +87,7 @@ public class SpellMasterCommands implements CommandListener {
 			player.chat("Bonus to range +" + spellboost.getRange());
 			player.chat("Bonus to damage +" + spellboost.getDamage());
 			player.chat("Bonus to duration +" + spellboost.getDurationInSeconds() + " seconds");
+			player.chat("Reduction in exhaustion -" + spellboost.getExhaustionReduction());
 		}
 		
 	}

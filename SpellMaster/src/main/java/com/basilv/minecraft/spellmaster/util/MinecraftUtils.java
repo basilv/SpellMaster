@@ -22,33 +22,13 @@ public class MinecraftUtils {
 
 	public static long secondsToTicks(long seconds) {
 		// TODO: Consider using Canary.getServer().getTicksPerSecond()
-
+		
 		long millisPerTick = 50;
 		long ticks = seconds * 1000 / millisPerTick;
 		return ticks;
 	}
 
 	public static Item createWrittenBookWithContent(String title, List<List<String>> pagesOfTextLines, List<String> loreTextLines) {
-		// TODO: Unable to unit test this logic because of the following error.
-		
-		// Unable to directly create new CanaryItem because of the following error:
-//		java.lang.SecurityException: sealing violation: can't seal package net.canarymod.api.inventory: already loaded
-//		at java.net.URLClassLoader.getAndVerifyPackage(URLClassLoader.java:401)
-//		at java.net.URLClassLoader.defineClass(URLClassLoader.java:423)
-//		at java.net.URLClassLoader.access$100(URLClassLoader.java:73)
-//		at java.net.URLClassLoader$1.run(URLClassLoader.java:367)
-//		at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
-//		at java.security.AccessController.doPrivileged(Native Method)
-//		at java.net.URLClassLoader.findClass(URLClassLoader.java:360)
-//		at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
-//		at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
-//		at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
-//		at com.basilv.minecraft.spellmaster.util.MinecraftUtils.createWrittenBookWithContent(MinecraftUtils.java:40)
-//		Item item =  new CanaryItem(ItemType.WrittenBook.getId(), 1);
-
-//		java.lang.NullPointerException
-//		at net.canarymod.Canary.factory(Canary.java:221)
-//		at com.basilv.minecraft.spellmaster.util.MinecraftUtils.createWrittenBookWithContent(MinecraftUtils.java:32)
 		Item item = Canary.factory().getItemFactory().newItem(ItemType.WrittenBook);
 		item.setDisplayName(title); // This must be first, before populating the data tag, since it creates the data tag.
 
@@ -138,6 +118,7 @@ public class MinecraftUtils {
 	 * @param item
 	 */
 	public static void giveItemToPlayer(Player player, Item item) {
+		// TODO: This will add a non-equippable item like a book to an equippable slot (e.g. helmet) if all other slots are full.
 		// Fancy logic necessary to get the inventory to update properly when this is invoked from a hook like ItemUseHook
 		Canary.getServer().addSynchronousTask(new ChangeInventoryTask() {
 			@Override public void doTask() {

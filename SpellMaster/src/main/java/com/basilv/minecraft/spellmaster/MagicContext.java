@@ -8,6 +8,8 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
+import net.canarymod.api.world.effects.Particle;
+import net.canarymod.api.world.position.Location;
 
 /**
  * Context for performing magic: casting a spell or performing a ceremony. 
@@ -70,20 +72,15 @@ public class MagicContext {
 
 	@SuppressWarnings("rawtypes") 
 	public long countTomesPlayerHas(Class... tomeClasses) {
-
 		return Arrays.stream(tomeClasses).filter(clazz -> doesPlayerHaveTome(clazz)).count();
-		
-//		int count = 0;
-//		for (Class clazz : tomeClasses) {
-//			if (doesPlayerHaveTome(clazz)) {
-//				count++;
-//			}
-//		}
-//		return count;
 	}
 	
 	public boolean doesPlayerHaveTome(@SuppressWarnings("rawtypes") Class clazz) {
 		return tomes.stream().anyMatch(tome -> clazz.getCanonicalName().equals(tome.getClass().getCanonicalName()));
+	}
+	
+	public void spawnParticle(Location location, Particle.Type type) {
+		getWorld().spawnParticle(new Particle(location.getX(), location.getY(), location.getZ(), type));
 	}
 	
 }

@@ -23,6 +23,8 @@ import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
  */
 public abstract class Spell extends NamedObject {
 
+	protected final Logger logger = Logger.getLogger(getClass().getName());
+
 	private MagicFocus castingFocus;
 	private MagicComponent castingComponent;
 	private int castingMinimumLevel = 1;
@@ -105,16 +107,14 @@ public abstract class Spell extends NamedObject {
 	 */
 	protected void applyCastingCost(MagicContext context) {
 		
-		// TODO: Have each element have a slightly different cost. Earth = more exhaustive. Nature = less damaging. Fire = set on fire.
-		
 		// The idea behind this cost is to have restrictions on repeated castings, especially in combat when taking damage
 		// Using lots of spells will require more food, another balancing point to prevent overuse at the start of the game before
 		// the player has amassed significant food resources.
 		
-		// TODO: Use context with spellboost effects for exhaustion level and maybe health cost?
 		Player player = context.getPlayer();
-		player.setExhaustion(player.getExhaustionLevel() + getCastingExhaustionCost());
-		
+		float exhaustionCost = Math.max(getCastingExhaustionCost() - context.getSpellboost().getExhaustionReduction(), 0);
+		SpellExhaustionTask.addSpellExhaustion(player, exhaustionCost);
+
 		player.setHealth(player.getHealth() - getCastingHealthCost());
 
 		if (castingComponent != null) {
@@ -122,13 +122,19 @@ public abstract class Spell extends NamedObject {
 		}
 	}
 
+	/**
+	 * @return cost in health for casting the spell. Regenerating each health lost will cost almost a full level of saturation / hunger 
+	 * and regeneration only happens if hunger level is > 18. Default cost 0.7 health
+	 */
 	protected float getCastingHealthCost() {
-		// Regenerating this one health will cost almost a full level of saturation / hunger. And can't regenerate if hunger level is below 18.
-		return 1;
+		return 0.7f;
 	}
 
+	/**
+	 * @return cost in exhaustion for casting the spell. Level 4 (the normal max) is equaly to one level of saturation / hunger. Levels higher 
+	 * than 4 can be returned - the cost will be applied over time as needed to ensure the full cost is paid. Default cost 4 exhaustion.
+	 */
 	protected float getCastingExhaustionCost() {
-		// This will spend one level of saturation / hunger, more exhausting than any other action in the game.
 		return 4;
 	}
 
@@ -183,7 +189,7 @@ public abstract class Spell extends NamedObject {
 		if (!createCastingGameEffect(context)) {
 			return false;
 		}
-		log("Casting spell " + getName());
+		logger.info("Casting spell " + getName());
 		createCastingVisualAndSoundEffects(context.getPlayer());
 		applyCastingCost(context);
 		return true;
@@ -207,15 +213,6 @@ public abstract class Spell extends NamedObject {
 		return SoundEffect.Type.ORB;
 	}
 
-	protected final void spawnParticle(Player player, Location location, Particle.Type type) {
-		// TODO: Move to magic context?
-		player.getWorld().spawnParticle(new Particle(location.getX(), location.getY(), location.getZ(), type));
-	}
-	
-	protected final void log(String message) {
-		Logger.getLogger(getClass().getName()).info(message);
-	}
-	
 	protected final int randomNumberWithinRange(int low, int high) {
 		int result = (int) (Math.random() * (high - low)) + low;
 		return result;

@@ -53,7 +53,7 @@ public class SummonZombieSpell extends Spell {
 
 	    EntityLiving pig = factory.newEntityLiving(EntityType.PIG, summonLocation);
 	    EntityLiving zombie = factory.newEntityLiving(EntityType.PIGZOMBIE, summonLocation);
-	    zombie.setDisplayName("ox");
+	    zombie.setDisplayName("BOB");
 	    pig.spawn(zombie);
 	    
 	    

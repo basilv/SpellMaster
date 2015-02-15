@@ -37,13 +37,12 @@ public class EarthMagicTome extends Tome {
 		super("Earth Magic", 1);
 		setCeremonyFocus("Stone pickaxe that is heavily damaged (red level)", ItemType.StonePickaxe);
 		setCeremonyComponent("Stone pickaxe", ItemType.StonePickaxe, 9);
-		setSpellBoost(new SpellBoost(0, 0, 0, 1));
+		setSpellBoost(new SpellBoost(0, 0, 0, 1, 0));
 		
 		addSpell(new DisintegrateEarthSpell());
 		addSpell(new WallOfStoneSpell());
 		addSpell(new SenseOreSpell());
 		
-		// TODO: Add spells
 		// Flatten area
 		// Create bridge
 	}

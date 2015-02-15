@@ -8,10 +8,10 @@ import net.canarymod.api.world.World;
 import net.canarymod.api.world.effects.SoundEffect;
 
 import com.basilv.minecraft.spellmaster.MagicContext;
-import com.basilv.minecraft.spellmaster.Spell;
+import com.basilv.minecraft.spellmaster.tomes.AirMagicTome.AirSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class ControlWeatherSpell extends Spell {
+public class ControlWeatherSpell extends AirSpell {
 
 	public ControlWeatherSpell() {
 		super("Control Weather");

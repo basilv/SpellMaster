@@ -20,7 +20,7 @@ public class ArchmageTome extends Tome {
 		super("Archmage Magic", 3);
 		setCeremonyFocus("Book", ItemType.Book);
 		setCeremonyComponent("Diamond Block", ItemType.DiamondBlock, 1); 
-		setSpellBoost(new SpellBoost(2, 1, 1, 2));
+		setSpellBoost(new SpellBoost(2, 1, 1, 2, 1));
 		
 		addSpell(new GreaterTeleportSpell());
 		// TODO: majestic mansion spell?
@@ -29,7 +29,7 @@ public class ArchmageTome extends Tome {
 	@Override
 	protected List<String> getBookIntroduction() {
 		return Arrays.asList("Gain the powers of an archmage."
-			,"" , "Boost: +2 casting level, +1 damage, +1 range, +2 second duration"); 
+			,"" , "Boost: +2 casting level, +1 damage, +1 range, +2 second duration, -1 exhaustion"); 
 	}
 
 	@Override

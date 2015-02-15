@@ -15,16 +15,18 @@ public class SpellBoost {
 	private final int damage;
 	private final int range;
 	private final int durationInSeconds;
+	private final int exhaustionReduction;
 	
 	public SpellBoost() {
-		this(0, 0, 0, 0);
+		this(0, 0, 0, 0, 0);
 	}
 	
-	public SpellBoost(int casterLevel, int damage, int range, int durationInSeconds) {
+	public SpellBoost(int casterLevel, int damage, int range, int durationInSeconds, int exhaustionReduction) {
 		this.casterLevel = casterLevel;
 		this.damage = damage;
 		this.range = range;
 		this.durationInSeconds = durationInSeconds;
+		this.exhaustionReduction = exhaustionReduction;
 	}
 	
 	public SpellBoost(Collection<Tome> tomes) {
@@ -34,18 +36,21 @@ public class SpellBoost {
 		int tmpDamage = 0;
 		int tmpRange = 0;
 		int tmpDuration = 0;
+		int tmpExhaustionReduction = 0;
 		for (Tome tome : tomeSet) {
 			SpellBoost boost = tome.getSpellBoost();
 			tmpCasterLevel += boost.getCasterLevel();
 			tmpDamage += boost.getDamage();
 			tmpRange += boost.getRange();
 			tmpDuration += boost.getDurationInSeconds();
+			tmpExhaustionReduction += boost.getExhaustionReduction();
 		}
 
 		casterLevel = tmpCasterLevel;
 		damage = tmpDamage;
 		range = tmpRange;
 		durationInSeconds = tmpDuration;
+		exhaustionReduction = tmpExhaustionReduction;
 	}
 
 	public int getCasterLevel() {
@@ -63,5 +68,9 @@ public class SpellBoost {
 	public int getDurationInSeconds() {
 		return durationInSeconds;
 	}
-	
+
+	public int getExhaustionReduction() {
+		return exhaustionReduction;
+	}
+
 }

@@ -12,6 +12,7 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.Spell;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.experimental.FireballSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class FireMagicTome extends Tome {
@@ -45,12 +46,12 @@ public class FireMagicTome extends Tome {
 		super("Fire Magic", 2);
 		setCeremonyFocus("Blaze rod", ItemType.BlazeRod);
 		setCeremonyComponent("Blaze rod", ItemType.BlazeRod, 1);
-		setSpellBoost(new SpellBoost(0, 1, 0, 0));
+		setSpellBoost(new SpellBoost(0, 1, 0, 0, 0));
 
+		addSpell(new FireballSpell());
 		// TODO: Fire spells
 		// Ignite: convert air block to fire, revert back after duration ends?
 		// Lava burst
-		// Fireball
 		// Flamewall
 	}
 
