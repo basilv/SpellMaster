@@ -21,10 +21,8 @@ import net.canarymod.chat.ChatFormat;
 public class MinecraftUtils {
 
 	public static long secondsToTicks(long seconds) {
-		// TODO: Consider using Canary.getServer().getTicksPerSecond()
-		
-		long millisPerTick = 50;
-		long ticks = seconds * 1000 / millisPerTick;
+		// Roughly 20 ticks per second in my testing.
+		long ticks = (long)(seconds * Canary.getServer().getTicksPerSecond());
 		return ticks;
 	}
 
@@ -189,6 +187,7 @@ public class MinecraftUtils {
 	}
 
 	public static Position getPositionAdjustmentForDirectionPlayerFacing(Player player) {
+		// TODO: Check out Ideas.fling() logic
 		Position positionAdjustment = new Position(0, 0, 0);
 		switch (player.getCardinalDirection()) {
 		case NORTH:

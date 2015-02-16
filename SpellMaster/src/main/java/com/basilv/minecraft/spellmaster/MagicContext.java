@@ -28,7 +28,7 @@ public class MagicContext {
 		this.blockClicked = blockClicked;
 		
 		tomes = Tome.getTomesInPlayerInventory(player).stream()
-			.sorted((first, second) -> Integer.valueOf(first.getTomeLevel()).compareTo(Integer.valueOf(second.getTomeLevel())))
+			.sorted((first, second) -> -1 * Integer.valueOf(first.getTomeLevel()).compareTo(Integer.valueOf(second.getTomeLevel())))
 			.collect(Collectors.toList());
 		spells = Tome.getSpellsFromTomes(tomes);
 		spellboost = new SpellBoost(tomes);

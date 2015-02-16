@@ -12,6 +12,7 @@ import net.canarymod.api.world.position.Position;
 import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.DetectOreSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.GreaterTeleportSpell;
 
 public class ArchmageTome extends Tome {
@@ -22,6 +23,7 @@ public class ArchmageTome extends Tome {
 		setCeremonyComponent("Diamond Block", ItemType.DiamondBlock, 1); 
 		setSpellBoost(new SpellBoost(2, 1, 1, 2, 1));
 		
+		addSpell(new DetectOreSpell());
 		addSpell(new GreaterTeleportSpell());
 		// TODO: majestic mansion spell?
 	}
@@ -42,7 +44,7 @@ public class ArchmageTome extends Tome {
 		lines.addAll(Arrays.asList(
 			"Requirements: Use the focus while standing on a diamond block " 
 			+ "with at least two of the following tomes in your inventory: Air Magic, Fire Magic, Necromancy Magic. "
-			// TODO: Added challenge: diamond surrounded by gold??? Something else? Lapis (something not found by sense ore spell?)
+			// TODO: Added challenge: diamond surrounded by gold??? 
 		));
 	}
 	

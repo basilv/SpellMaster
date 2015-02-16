@@ -12,8 +12,8 @@ import net.canarymod.api.world.position.Position;
 import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.TeleportSpell;
 import com.basilv.minecraft.spellmaster.spells.experimental.GuidedMissileSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.TeleportSpell;
 
 public class WizardTome extends Tome {
 

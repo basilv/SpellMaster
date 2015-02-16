@@ -36,7 +36,28 @@ public class FireballSpell extends FireSpell {
 	protected boolean createCastingGameEffect(MagicContext context) {
 
 		// TODO: Game effect
-		
+//		world.makeExplosion(victim, 
+//		          loc.getX(), loc.getY(), loc.getZ(), 
+//		          100.0f, true);
+//	      boolean includeAir = true;
+//	      BlockIterator sightItr = new BlockIterator(new LineTracer(me), includeAir);
+//	      while (sightItr.hasNext()) {
+//	        Block b = sightItr.next();
+//	        spawnParticle(b.getLocation(), Particle.Type.FIREWORKS_SPARK);    
+//	        if (b.getType() != BlockType.Air) {
+//	          
+//	          Location newLocation = new Location(b.getLocation());
+//	          newLocation.setY(newLocation.getY()+2);
+//	          Cow cow = (Cow)spawnEntityLiving(newLocation, EntityType.COW);
+//	          cow.setDisplayName("Summoned");
+//	          playSound(b.getLocation(), SoundEffect.Type.COW_SAY);
+//	          
+//	          // b.getWorld().setBlockAt(newLocation, BlockType.Sand);
+////	          playSound(b.getLocation(), SoundEffect.Type.ANVIL_LAND);
+//	          break;
+//	        }
+//	      }
+
 	    return true;
 	}
 

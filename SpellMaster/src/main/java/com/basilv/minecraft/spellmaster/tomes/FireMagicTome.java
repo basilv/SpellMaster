@@ -3,6 +3,7 @@ package com.basilv.minecraft.spellmaster.tomes;
 import java.util.Arrays;
 import java.util.List;
 
+import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.DimensionType;
@@ -28,7 +29,7 @@ public class FireMagicTome extends Tome {
 			super.applyCastingCost(context);
 			// Set player on fire briefly.
 			Player player = context.getPlayer();
-			player.setFireTicks(player.getFireTicks() + (int)MinecraftUtils.secondsToTicks(1));
+			player.setFireTicks(player.getFireTicks() + (int)MinecraftUtils.secondsToTicks(2));
 		}
 
 		@Override

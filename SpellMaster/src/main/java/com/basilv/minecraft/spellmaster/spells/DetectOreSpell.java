@@ -16,21 +16,21 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
-public class SenseOreSpell extends EarthMagicTome.EarthSpell {
+public class DetectOreSpell extends EarthMagicTome.EarthSpell {
 
-	// TODO: Might be too powerful to put into Earth Magic Tome - put into ArchmageTome??? Drastically increase casting cost???
+	// TODO: Eliminate duplication with SenseOreSpell
 	
 	private Map<ItemType,BlockType> blockTypeForItemHeld = new HashMap<>();
 
 	@SuppressWarnings("deprecation")
-	public SenseOreSpell() {
-		super("Sense Ore");
-		setCastingMinimumLevel(5);
+	public DetectOreSpell() {
+		super("Detect Ore");
+		setCastingMinimumLevel(30);
 
 		blockTypeForItemHeld.put(ItemType.CoalBlock, BlockType.CoalOre);
 		blockTypeForItemHeld.put(ItemType.IronBlock, BlockType.IronOre);
 		blockTypeForItemHeld.put(ItemType.RedstoneBlock, BlockType.RedstoneOre);
-		blockTypeForItemHeld.put(ItemType.LapisBlock, BlockType.LapislazuliOre); // LapisOre causes exception
+		blockTypeForItemHeld.put(ItemType.LapisBlock, BlockType.LapislazuliOre);
 		blockTypeForItemHeld.put(ItemType.EmeraldBlock, BlockType.EmeraldOre);
 		blockTypeForItemHeld.put(ItemType.GoldBlock, BlockType.GoldOre);
 		blockTypeForItemHeld.put(ItemType.DiamondBlock, BlockType.DiamondOre);
@@ -40,11 +40,11 @@ public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 
 	@Override
 	protected void populateSpellSpecificCastingInformation(List<String> lines) {
+		// TODO: Adjust range of spell?
 		lines.addAll(Arrays.asList(
 		   "Range: 1 square per level", 
 		   "Use the focus without placing the block. You will sense the direction to the nearest ore corresponding to the material you are using as a focus "
 		   + "if it is within the spell's range. "
-		   + "At higher levels the sense of direction grows more accurate."
 		));
 	}
 	
@@ -57,21 +57,13 @@ public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 	protected boolean createCastingGameEffect(MagicContext context) {
 
 		Player player = context.getPlayer();
-
 		BlockType blockType = blockTypeForItemHeld.get(player.getItemHeld().getType());
 		
 		Position nearestOrePosition = getNearestOrePosition(context, blockType);
-
 		if (nearestOrePosition == null) {
 			player.chat("No ore sensed");
 			return true;
 		}
-		
-		int castingLevel = context.getCastingLevel();
-		if (castingLevel < 10) {
-			player.chat("Ore sensed");
-			return true;
-		} 
 		
 		Position playerPosition = player.getPosition();
 		int xDiff = nearestOrePosition.getBlockX() - playerPosition.getBlockX();
@@ -79,15 +71,7 @@ public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 		int zDiff = nearestOrePosition.getBlockZ() - playerPosition.getBlockZ();
 
 		sendOreClosenessMessage(player, xDiff, yDiff, zDiff);
-		// TODO: Evaluate
-//		if (castingLevel < 20) {
-//			sendOreClosenessMessage(player, xDiff, yDiff, zDiff);
-//		} else if (castingLevel < 30) {
-//			sendOreDirectionMessage(player, xDiff, yDiff, zDiff);
-//		} else {
-//			sendOreClosenessMessage(player, xDiff, yDiff, zDiff);
-//			sendOreDirectionMessage(player, xDiff, yDiff, zDiff);
-//		}
+		sendOreDirectionMessage(player, xDiff, yDiff, zDiff);
 
 	    return true;
 	}
@@ -116,8 +100,7 @@ public class SenseOreSpell extends EarthMagicTome.EarthSpell {
 		
 	}
 
-	// TODO: Deal with duplication with Detect Ore spell
-	void sendOreDirectionMessage(Player player, int xDiff, int yDiff,
+	private void sendOreDirectionMessage(Player player, int xDiff, int yDiff,
 			int zDiff) {
 		Position positionAdjustmentFacing = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
 		Position positionAdjustmentLeft = MinecraftUtils.getPositionAdjustmentForDirectionPlayerLeftSide(player);

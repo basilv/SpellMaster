@@ -258,4 +258,16 @@ public class Ideas {
 //     //Then apply this to our rocket
 //     fw.setFireworkMeta(fwm);
 	}
+	
+	public void fling() {
+//	    double pitch = (player.getPitch() + 90.0F) * Math.PI / 180.0D;
+//	    double rot = (player.getRotation() + 90.0F) * Math.PI / 180.0D;
+//	    double x = Math.sin(pitch) * Math.cos(rot);
+//	    double z = Math.sin(pitch) * Math.sin(rot);
+//	    double y = Math.cos(pitch);
+//	 
+//	    entity.moveEntity(x * factor, y + 0.5, z * factor);
+		
+	}
+	
 }

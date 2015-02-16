@@ -38,7 +38,7 @@ public class WaterMagicTome extends Tome {
 	public WaterMagicTome() {
 		super("Water Magic", 1);
 		setCeremonyFocus("Water bucket", ItemType.WaterBucket);
-		setSpellBoost(new SpellBoost(0, 0, 0, 1, 0));
+		setSpellBoost(new SpellBoost(0, 0, 0, 10, 0));
 		
 		addSpell(new WallOfWaterSpell());
 		addSpell(new AcidErosionSpell());
