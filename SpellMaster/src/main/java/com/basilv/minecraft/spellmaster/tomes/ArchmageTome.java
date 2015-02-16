@@ -23,7 +23,7 @@ public class ArchmageTome extends Tome {
 		setCeremonyComponent("Diamond Block", ItemType.DiamondBlock, 1); 
 		setSpellBoost(new SpellBoost(2, 1, 1, 2, 1));
 		
-		addSpell(new DetectOreSpell());
+		addSpell(new DetectOreSpell()); // TODO: Move to Elemental Mastery book
 		addSpell(new GreaterTeleportSpell());
 		// TODO: majestic mansion spell?
 	}

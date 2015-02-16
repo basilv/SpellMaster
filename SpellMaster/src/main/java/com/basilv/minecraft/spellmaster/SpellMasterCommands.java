@@ -3,6 +3,7 @@ package com.basilv.minecraft.spellmaster;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -92,22 +93,54 @@ public class SpellMasterCommands implements CommandListener {
 		
 	}
 
-	// TODO: For debugging mostly
 	@Command(aliases = { "listtomes" },
 	        parent = "spellmaster",
 	        helpLookup = "spellmaster listtomes",
 	        description = "List all available tomes.",
-	        permissions = { "spellmaster.command.castbonus" },
+	        permissions = { "spellmaster.command.listtomes" },
 	        toolTip = "/spellmaster listtomes",
 	        min = 0, 
 	        version = 2)
 	public void listTomesCommand(MessageReceiver caller, String[] parameters) {
 		caller.message("Available tomes of magic:");
-		for (Tome tome : TomeRegistry.getTomes()) {
-			caller.message(tome.getName());
-		}
+		TomeRegistry.getTomes().stream()
+			.sorted((first, second) -> first.getName().compareTo(second.getName()))
+			.forEach(tome -> {
+				caller.message(tome.getName() + "  min level for ceremony = " + tome.getCeremonyMinimumLevel());
+			});
 	}
 
+	@Command(aliases = { "listspells" },
+	        parent = "spellmaster",
+	        helpLookup = "spellmaster listspells",
+	        description = "List available spellsby by page #.",
+	        permissions = { "spellmaster.command.listspells" },
+	        toolTip = "/spellmaster listspells < page number>",
+	        min = 2, 
+	        version = 2)
+	public void listSpellsCommand(MessageReceiver caller, String[] parameters) {
+		int page = Integer.parseInt(parameters[1]);
+		int spellsPerPage = 9;
+		int spellsToSkip = (page -1) * spellsPerPage;
+		int maxSpells = (int) TomeRegistry.getTomes().stream().flatMap(tome -> tome.getSpells().stream()).count();
+		int maxPages = (int)Math.ceil((double)maxSpells / (double)spellsPerPage);
+		caller.message("Spell List (page " + page + " / " + maxPages + "):");
+		caller.message("Legend: L = level, H = health cost, E = exhaustion cost, F = focus, C = component");
+		TomeRegistry.getTomes().stream().flatMap(tome -> tome.getSpells().stream())
+			.sorted((first, second) -> first.getName().compareTo(second.getName()))
+			.skip(spellsToSkip)
+			.limit(spellsPerPage)
+			.forEach(spell -> {
+				String message = spell.getName() + "  L:" + spell.getCastingMinimumLevel() + 
+					" H:" + spell.getCastingHealthCost() + " E:" + spell.getCastingExhaustionCost() + " F:" + spell.getCastingFocus();
+				if (spell.getCastingComponent() != null) {
+					message += " C:" + spell.getCastingComponent();
+				}
+				caller.message(message);
+			});
+	}
+	
+	
 	/**
 	 * Displays warning to player if no name was provided.
 	 * @param player
