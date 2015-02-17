@@ -17,6 +17,7 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.tomes.EarthMagicTome;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
+@SuppressWarnings("deprecation") // For deprecated Canary item types
 public class DisintegrateEarthSpell extends EarthMagicTome.EarthSpell {
 
 	public DisintegrateEarthSpell() {

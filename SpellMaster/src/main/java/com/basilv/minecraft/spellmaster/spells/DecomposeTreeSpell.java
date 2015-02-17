@@ -92,6 +92,7 @@ public class DecomposeTreeSpell extends NatureSpell {
 		return (treeBlocksDecomposed > 0);
 	}
 
+	@SuppressWarnings("deprecation")
 	private static Set<BlockType> leafBlocks = new HashSet<>(Arrays.asList(
 			BlockType.AcaciaLeaves, 
 			BlockType.BirchLeaves, 
@@ -101,6 +102,7 @@ public class DecomposeTreeSpell extends NatureSpell {
 			BlockType.PineLeaves 
 		));
 
+	@SuppressWarnings("deprecation")
 	private static Set<BlockType> woodBlocks = new HashSet<>(Arrays.asList(
 			BlockType.AcaciaLog,
 			BlockType.BirchLog,

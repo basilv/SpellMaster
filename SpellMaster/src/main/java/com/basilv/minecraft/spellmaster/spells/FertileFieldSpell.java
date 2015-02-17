@@ -36,6 +36,7 @@ public class FertileFieldSpell extends NatureSpell {
 		));
 	}
 
+	@SuppressWarnings("deprecation") // For deprecated Canary item types
 	@Override
 	protected boolean createCastingGameEffect(MagicContext context) { 
 
