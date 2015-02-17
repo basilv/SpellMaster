@@ -267,4 +267,8 @@ public class MinecraftUtils {
 		return true;
 	}
 
+	public static int chunksToBlocks(int numChunks) {
+		return numChunks * 16;
+	}
+
 }

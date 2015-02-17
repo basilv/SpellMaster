@@ -3,7 +3,6 @@ package com.basilv.minecraft.spellmaster;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;

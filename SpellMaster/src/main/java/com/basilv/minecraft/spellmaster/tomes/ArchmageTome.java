@@ -13,7 +13,7 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
 import com.basilv.minecraft.spellmaster.spells.DetectOreSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.GreaterTeleportSpell;
+import com.basilv.minecraft.spellmaster.spells.GreaterTeleportSpell;
 
 public class ArchmageTome extends Tome {
 
