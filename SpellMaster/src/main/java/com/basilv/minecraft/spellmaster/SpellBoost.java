@@ -73,4 +73,5 @@ public class SpellBoost {
 		return exhaustionReduction;
 	}
 
+	// TODO: Have description of spellboost, use in Tome class as part of description? and in list tomes command
 }

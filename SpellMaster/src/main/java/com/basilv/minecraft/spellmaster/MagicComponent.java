@@ -75,7 +75,7 @@ public class MagicComponent {
 		if (numberConsumed != null) {
 			return numberConsumed.toString() + " " + itemDescription;
 		} else {
-			return itemDescription;
+			return itemDescription + " (Not consumed)";
 		}
 	}
 
