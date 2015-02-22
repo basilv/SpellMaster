@@ -1,7 +1,6 @@
 package com.basilv.minecraft.spellmaster;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -13,8 +12,6 @@ import com.basilv.minecraft.spellmaster.util.ChangeInventoryTask;
 
 public class MagicComponent {
 
-	private final Logger logger = Logger.getLogger(getClass().getName());
-	
 	private ItemType itemType;
 	private String itemDescription;
 	private Integer numberConsumed;
@@ -53,7 +50,6 @@ public class MagicComponent {
 		}
         Canary.getServer().addSynchronousTask(new ChangeInventoryTask() {
 			@Override public void doTask() {
-				logger.info("Updating inventory for " + numberConsumed + " " + itemType.getMachineName()); // TODO
 				PlayerInventory inventory = player.getInventory();
 				int numberRemainingToConsume = numberConsumed;
 				while (numberRemainingToConsume > 0) {

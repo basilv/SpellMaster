@@ -20,8 +20,6 @@ import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
  */
 public abstract class AbstractFindOreSpell extends EarthMagicTome.EarthSpell {
 
-	// TODO: Might be too powerful to put into Earth Magic Tome - put into ArchmageTome??? Drastically increase casting cost???
-	
 	private Map<ItemType,BlockType> blockTypeForItemHeld = new HashMap<>();
 
 	/**
@@ -65,7 +63,7 @@ public abstract class AbstractFindOreSpell extends EarthMagicTome.EarthSpell {
 		Position nearestOrePosition = getNearestOrePosition(context, blockType);
 
 		if (nearestOrePosition == null) {
-			player.chat("No ore " + getPastTenseActionVerb());
+			player.message("No ore " + getPastTenseActionVerb());
 			return true;
 		}
 
@@ -108,7 +106,7 @@ public abstract class AbstractFindOreSpell extends EarthMagicTome.EarthSpell {
 			message = "very far away";
 		}
 
-		player.chat("Ore " + getPastTenseActionVerb() + " " + message);
+		player.message("Ore " + getPastTenseActionVerb() + " " + message);
 		
 	}
 
@@ -117,7 +115,6 @@ public abstract class AbstractFindOreSpell extends EarthMagicTome.EarthSpell {
 	 */
 	protected abstract String getPastTenseActionVerb();
 	
-	// TODO: Deal with duplication with Detect Ore spell
 	protected final void sendOreDirectionMessage(Player player, int xDiff, int yDiff,
 			int zDiff) {
 		Position positionAdjustmentFacing = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
@@ -165,7 +162,7 @@ public abstract class AbstractFindOreSpell extends EarthMagicTome.EarthSpell {
 			message += " at your level";
 		}
 		
-		player.chat("Ore " + getPastTenseActionVerb() + " " + message);
+		player.message("Ore " + getPastTenseActionVerb() + " " + message);
 	}
 
 	protected final Position getNearestOrePosition(MagicContext context, BlockType blockType) {

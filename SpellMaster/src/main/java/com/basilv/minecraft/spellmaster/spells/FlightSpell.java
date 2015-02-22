@@ -92,7 +92,7 @@ public class FlightSpell extends Spell {
 
 	    public void doTask() {
 	    	playerUuidFlyingMap.remove(player.getUUIDString());
-	    	player.chat(getName() + " spell ending");
+	    	player.message(getName() + " spell ending");
 	    	HumanCapabilities capabilities = player.getCapabilities();
 			capabilities.setMayFly(false);
 	    	capabilities.setFlying(false);

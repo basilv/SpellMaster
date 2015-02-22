@@ -75,7 +75,7 @@ public class DisintegrateEarthSpell extends EarthMagicTome.EarthSpell {
 			
 			if (!canDisintegrateBlock(player, blockType)) {
 				// Encountering block that cannot be disintegrated stops further disintegration
-				// player.chat("Cannot disintegrate " + blockType.getMachineName());
+				// player.message("Cannot disintegrate " + blockType.getMachineName());
 				break;
 			}
 

@@ -51,7 +51,7 @@ public class GreaterTeleportSpell extends AbstractTeleportSpell {
 			position.moveY(+1);
 			if (position.getBlockY() > 255) {
 				// At maximum height so abort teleport
-				player.chat("Destination is occupied by solid material.");
+				player.message("Destination is occupied by solid material.");
 				return null;
 			}
 		}

@@ -12,7 +12,7 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.Spell;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
-import com.basilv.minecraft.spellmaster.spells.experimental.FireballSpell;
+import com.basilv.minecraft.spellmaster.spells.FireballSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class FireMagicTome extends Tome {

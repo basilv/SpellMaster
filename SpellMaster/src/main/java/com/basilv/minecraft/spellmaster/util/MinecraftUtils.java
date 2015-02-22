@@ -20,7 +20,7 @@ import net.canarymod.chat.ChatFormat;
 
 public class MinecraftUtils {
 
-	public static long secondsToTicks(long seconds) {
+	public static long secondsToTicks(double seconds) {
 		// Roughly 20 ticks per second in my testing.
 		long ticks = (long)(seconds * Canary.getServer().getTicksPerSecond());
 		return ticks;
@@ -122,7 +122,7 @@ public class MinecraftUtils {
 			@Override public void doTask() {
 				PlayerInventory inventory = player.getInventory();
 				if (inventory.getEmptySlot() == -1) {
-					player.chat("No space in inventory for item " + item.getDisplayName());
+					player.message("No space in inventory for item " + item.getDisplayName());
 					return;
 				}
 				inventory.addItem(item);

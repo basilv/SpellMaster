@@ -38,14 +38,14 @@ public class AirMagicTome extends Tome {
 	public AirMagicTome() {
 		super("Air Magic", 2);
 		setCeremonyFocus("Feather", ItemType.Feather); 
-		setCeremonyComponent("Feather", ItemType.Feather, 32);
+		setCeremonyComponent("Feather", ItemType.Feather, 64);
 		setSpellBoost(new SpellBoost(0, 0, 1, 0, 0));
 		
 		addSpell(new ControlWeatherSpell());
 		addSpell(new LightningBoltSpell());
 		addSpell(new FlightSpell());
 		
-		// TODO: Wind wall, focus: large fern (what then is control weather focus? Maybe sunflower?). Problem is sunflower and large fern are hard to get.
+		// TODO: Wind wall, focus: large fern or lilypad? (what then is control weather focus? Maybe sunflower?). Problem is sunflower and large fern are hard to get.
 		// Gust of wind: push all mobs away from you.
 	}
 

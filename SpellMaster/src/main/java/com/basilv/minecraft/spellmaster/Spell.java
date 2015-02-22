@@ -196,7 +196,7 @@ public abstract class Spell extends NamedObject {
 	}
 
 	protected final void sendPlayerUnableToCastMessage(Player player, String reason) {
-		player.chat("Unable to cast " + getName() + ": " + reason);
+		player.message("Unable to cast " + getName() + ": " + reason);
 	}
 
 	private void createCastingVisualAndSoundEffects(Player player) {
@@ -214,7 +214,7 @@ public abstract class Spell extends NamedObject {
 	}
 
 	protected final int randomNumberWithinRange(int low, int high) {
-		int result = (int) (Math.random() * (high - low)) + low;
+		int result = (int) (Math.random() * (high - low + 1)) + low;
 		return result;
 	}
 	

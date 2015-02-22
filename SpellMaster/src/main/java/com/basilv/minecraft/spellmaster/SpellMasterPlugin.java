@@ -17,9 +17,6 @@ import net.canarymod.logger.Logman;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
 
-import com.basilv.minecraft.spellmaster.spells.experimental.CreateSnowGolemSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.LightSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.SummonZombieSpell;
 import com.basilv.minecraft.spellmaster.tomes.IntroductorySpellcastingTome;
 
 public class SpellMasterPlugin extends Plugin implements PluginListener {
@@ -53,9 +50,9 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 		// TODO: Experimental spells - remove
 		// Create light spell with focus: sunflower or stick (YellowFlower item type)
 		// Higher level books reuse stick, but with more powerful spell?
-		introTome.addSpell(new LightSpell()); 
-		introTome.addSpell(new SummonZombieSpell());
-		introTome.addSpell(new CreateSnowGolemSpell());
+//		introTome.addSpell(new LightSpell()); 
+//		introTome.addSpell(new SummonZombieSpell());
+//		introTome.addSpell(new CreateSnowGolemSpell());
 
 		return true;
 	}
@@ -81,9 +78,9 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 		String tomeName = IntroductorySpellcastingTome.NAME;
 		TomeRegistry.getTomeForName(tomeName).giveTomeToPlayer(player);
 
-		player.chat("Welcome, apprentice.");
-		player.chat("Here is your tome ' " + tomeName + "'.");
-		player.chat("You would be well advised to read it.");
+		player.message("Welcome, apprentice.");
+		player.message("Here is your tome ' " + tomeName + "'.");
+		player.message("You would be well advised to read it.");
 	}
 
 	@HookHandler
@@ -106,36 +103,17 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 			return;
 		}
 
-//		for (Spell spell : context.getSpells()) {
-//			// If have focus for spell, then try to cast and stop trying anything else.
-//			if (spell.canCastSpellWithHeldItem(itemHeld)) {
-//				spell.tryCastSpell(context);
-//				return;
-//			}
-//		}
-		
 		// If no spell was castable, try invoking known ceremonies
 		Optional<Ceremony> ceremonyOptional = context.getTomes().stream()
 			.flatMap(tome -> tome.getCeremonies().stream())
 			.filter(ceremony -> ceremony.tryPerformCeremony(context))
 			.findFirst();
 		if (ceremonyOptional.isPresent()) {
-			player.chat("Performed ceremony " + ceremonyOptional.get().getName());
+			player.message("Performed ceremony " + ceremonyOptional.get().getName());
 			return;
 		}
 
 		TomeRegistry.getTomeForName(IntroductorySpellcastingTome.NAME).tryPerformCeremony(context);
-		
-//		for (Tome book : context.getTomes()) {
-//			for (Ceremony ceremony : book.getCeremonies()) {
-//				if (ceremony.tryPerformCeremony(context)) {
-//					player.chat("Performed ceremony " + ceremony.getName());
-//					return;
-//				}
-//			}
-//		}
-//		TomeRegistry.getTomeForName(IntroductorySpellcastingTome.NAME).tryPerformCeremony(context);
-
 	}
 	
 

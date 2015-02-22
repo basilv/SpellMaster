@@ -4,10 +4,15 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
+
 import net.canarymod.Canary;
+import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.nbt.BaseTag;
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.properties.BlockProperty;
 import net.canarymod.api.world.position.Position;
@@ -45,7 +50,7 @@ public class SpellMasterCommands implements CommandListener {
 			String name = getNameFromRestOfArguments(player, parameterList);
 			Tome book = TomeRegistry.getTomeForName(name);
 			if (book != null) {
-				player.chat("Receiving tome " + book.getName());
+				player.message("Receiving tome " + book.getName());
 				book.giveTomeToPlayer(player);
 			} else {
 				caller.message("Tome " + name + " does not exist.");
@@ -83,11 +88,11 @@ public class SpellMasterCommands implements CommandListener {
 			Player player = (Player) caller;
 			MagicContext context = new MagicContext(player, null);
 			SpellBoost spellboost = context.getSpellboost();
-			player.chat("Casting level " + context.getCastingLevel() + " (bonus +" + spellboost.getCasterLevel() + ")");
-			player.chat("Bonus to range +" + spellboost.getRange());
-			player.chat("Bonus to damage +" + spellboost.getDamage());
-			player.chat("Bonus to duration +" + spellboost.getDurationInSeconds() + " seconds");
-			player.chat("Reduction in exhaustion -" + spellboost.getExhaustionReduction());
+			player.message("Casting level " + context.getCastingLevel() + " (bonus +" + spellboost.getCasterLevel() + ")");
+			player.message("Bonus to range +" + spellboost.getRange());
+			player.message("Bonus to damage +" + spellboost.getDamage());
+			player.message("Bonus to duration +" + spellboost.getDurationInSeconds() + " seconds");
+			player.message("Reduction in exhaustion -" + spellboost.getExhaustionReduction());
 		}
 		
 	}
@@ -102,17 +107,22 @@ public class SpellMasterCommands implements CommandListener {
 	        version = 2)
 	public void listTomesCommand(MessageReceiver caller, String[] parameters) {
 		caller.message("Available tomes of magic:");
+		caller.message("Legend: LN = level needed for ceremony, LC = cost in levels, F = focus, C = component");
 		TomeRegistry.getTomes().stream()
 			.sorted((first, second) -> first.getName().compareTo(second.getName()))
 			.forEach(tome -> {
-				caller.message(tome.getName() + "  min level for ceremony = " + tome.getCeremonyMinimumLevel());
+				String message = tome.getName() + "  LN:" + tome.getCeremonyMinimumLevel() + " LC:" + tome.getCeremonyLevelCost() + " F:" + tome.getCeremonyFocus();
+				if (tome.getCeremonyComponent() != null) {
+					message += " C:" + tome.getCeremonyComponent();
+				}
+				caller.message(message);
 			});
 	}
 
 	@Command(aliases = { "listspells" },
 	        parent = "spellmaster",
 	        helpLookup = "spellmaster listspells",
-	        description = "List available spellsby by page #.",
+	        description = "List available spells by page #.",
 	        permissions = { "spellmaster.command.listspells" },
 	        toolTip = "/spellmaster listspells < page number>",
 	        min = 2, 
@@ -148,7 +158,7 @@ public class SpellMasterCommands implements CommandListener {
 	 */
 	private String getNameFromRestOfArguments(Player player, LinkedList<String> commandArguments) {
 		if (commandArguments.isEmpty()) {
-			player.chat("Need to specify name");
+			player.message("Need to specify name");
 			return null;
 		}
 		String name = convertAllArgumentsToName(commandArguments);
@@ -190,6 +200,45 @@ public class SpellMasterCommands implements CommandListener {
 			}
 		}
 	}
+
+	@Command(aliases = { "inspectEntity" }, description = "Inspect entity player is pointing at.", permissions = { "*" }, toolTip = "/inspectEntity")
+	public void inspectEntityCommand(MessageReceiver caller, String[] parameters) {
+		if (caller instanceof Player) {
+			Player player = (Player) caller;
+			Position playerPosition = player.getPosition();
+			player.getWorld().getTrackedEntities().stream().forEach(entity -> inspectEntity(playerPosition, entity)); 			
+		}
+	}
+
+	private void inspectEntity(Position playerPosition, Entity entity) {
+		int separation = MinecraftUtils.getSeparationInBlocks(entity.getPosition(), playerPosition);
+		if (separation > 10) {
+			return;
+		}
+
+		logger.info("Entity type = " + entity.getEntityType() + " name = " + entity.getDisplayName());
+		CompoundTag nbt = entity.getNBT();
+		if (nbt != null) {
+			logger.info("  NBT data:");
+			nbt.keySet().stream().forEach(key -> {
+				logger.info("    " + key + " = " + nbt.get(key));
+			});
+		}
+
+		if (entity.getEntityType().equals(EntityType.XPORB)) {
+			logger.info("Value value class = " + nbt.get("Value").getClass().getCanonicalName());
+			logger.info("Value value as short = " + nbt.getShort("Value"));
+
+			CompoundTag metaData = entity.getMetaData();
+			if (metaData != null) {
+				logger.info("  Meta data:");
+				metaData.keySet().stream().forEach(key -> {
+					logger.info("    " + key + " = " + metaData.get(key));
+				});
+			}
+		}
+	}
+	
 
 	@Command(aliases = { "inspectBlock" }, description = "Inspect block player is standing in and on.", permissions = { "*" }, toolTip = "/inspectBlock")
 	public void inspectBlockCommand(MessageReceiver caller, String[] parameters) {

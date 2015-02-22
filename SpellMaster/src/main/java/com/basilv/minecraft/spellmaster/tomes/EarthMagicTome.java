@@ -98,8 +98,6 @@ public class EarthMagicTome extends Tome {
 		for (int i = 0; i < expectedBlockSequence.length; i++) {
 			position.move(positionAdjustment.getBlockX(), 0, positionAdjustment.getBlockZ()); 
 			BlockType blockType = player.getWorld().getBlockAt(position).getType();
-			
-			log("Block at " + i + " pos " + position + " is " + blockType.getMachineName());
 			if (!expectedBlockSequence[i].equals(blockType)) {
 				sendPlayerUnableToPerformCeremonyMessage(player, "Block # " + (i+1) + " in front of you is not the correct type.");
 				return false;

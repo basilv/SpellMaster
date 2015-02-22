@@ -43,7 +43,7 @@ public class TeleportSpell extends AbstractTeleportSpell {
 		Position position = getInitialTargetPosition(player, MinecraftUtils.chunksToBlocks(rangeInChunks));
 		
 		if (!canPlayerTeleportToPosition(context.getWorld(), position)) {
-			player.chat("Destination is occupied by solid material.");
+			player.message("Destination is occupied by solid material.");
 			player.dealDamage(DamageType.SUFFOCATION, 1);
 			return null;
 		} else {

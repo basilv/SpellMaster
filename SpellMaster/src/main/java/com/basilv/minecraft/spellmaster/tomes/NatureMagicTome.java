@@ -55,6 +55,8 @@ public class NatureMagicTome extends Tome {
 		//  PackedIce, Peony,  , Reed, Rosebush
 		// Seeds, Shrub, Snow, Soil, Tallfern, Vines, Wheat, YellowFlower (Sunflower)
 		
+		// Grow tree via world.generateTree
+		
 	}
 
 	@Override

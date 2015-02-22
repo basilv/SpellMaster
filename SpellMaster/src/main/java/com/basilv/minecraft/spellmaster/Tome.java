@@ -20,6 +20,8 @@ import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
  */
 public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapable {
 
+	protected final Logger logger = Logger.getLogger(getClass().getName());
+
 	private static final String TOME_NAME_DATA_TAG = "spellmaster.tomeName"; 
 	// TODO: Have id used to identify tome in minecraft item tag different from book display name.
 
@@ -33,6 +35,7 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 				String tomeName = item.getDataTag().getString(TOME_NAME_DATA_TAG);
 				return TomeRegistry.getTomeForName(tomeName); 
 			})
+			.filter(tome -> tome != null) // If have outdated tome, can end up with null.
 			.collect(Collectors.toSet());
 		
 		return tomes;
@@ -198,7 +201,7 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 			return false;
 		}
 
-		log("Performning ceremony " + getCeremonyName());
+		logger.info("Performing ceremony " + getCeremonyName());
 		giveTomeToPlayer(player);
 		
 		applyCeremonyCost(context);
@@ -256,12 +259,7 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 	protected abstract boolean isCeremonyConditionsSpecificToTomeMet(MagicContext context);
 	
 	protected final void sendPlayerUnableToPerformCeremonyMessage(Player player, String reason) {
-		player.chat("Unable to perform ceremony: " + reason);
+		player.message("Unable to perform ceremony: " + reason);
 	}
 	
-	private final Logger logger = Logger.getLogger(getClass().getName());
-	protected final void log(String message) {
-		logger.info(message);
-	}
-
 }
