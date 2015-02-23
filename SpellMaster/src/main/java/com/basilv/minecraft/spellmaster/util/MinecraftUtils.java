@@ -271,4 +271,13 @@ public class MinecraftUtils {
 		return numChunks * 16;
 	}
 
+	public static void updateRelativesOfBlock(Block block) {
+		block.getRelative(1, 0, 0).update();
+		block.getRelative(-1, 0, 0).update();
+		block.getRelative(0, 0, 1).update();
+		block.getRelative(0, 0, -1).update();
+		block.getRelative(0, 1, 0).update();
+		block.getRelative(0, -1, 0).update();
+	}
+
 }

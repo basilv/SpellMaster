@@ -94,15 +94,12 @@ class TemporaryWallHelper {
 	    	for (Position position : positions) {
 	    		Block block = world.getBlockAt(position);
 				block.update();
-				block.getRelative(1, 0, 0).update();
-				block.getRelative(-1, 0, 0).update();
-				block.getRelative(0, 0, 1).update();
-				block.getRelative(0, 0, -1).update();
+				MinecraftUtils.updateRelativesOfBlock(block);
 	    	}
 
 	    	Canary.getServer().removeSynchronousTask(this);
 	    }
 
 	}
-	
+
 }
