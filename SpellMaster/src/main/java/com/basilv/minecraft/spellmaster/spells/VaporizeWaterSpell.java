@@ -86,6 +86,8 @@ public class VaporizeWaterSpell extends FireSpell {
 			blocksToVaporize.add(currentBlock.getRelative(0, 0, -1));
 		}
 
+		// Only update blocks at the end. Updating as each water block is turned to air will just cause the neighboring water blocks
+		// to refill the block that was removed.
 		positionsToUpdate.stream().forEach(position -> {
 			Block block = world.getBlockAt(position);
 			block.update();

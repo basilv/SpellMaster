@@ -89,7 +89,7 @@ public class AcidErosionSpell extends WaterSpell {
 			
 			// Randomly set a new direction.
 			if (rangeIndex % 2 == 1) {
-				switch (randomNumberWithinRange(1, 3)) {
+				switch (MinecraftUtils.randomNumberWithinRange(1, 3)) {
 				case 1:
 					positionAdjustment = MinecraftUtils.getPositionAdjustmentForDirectionPlayerLeftSide(player);
 					break;

@@ -212,10 +212,5 @@ public abstract class Spell extends NamedObject {
 	protected SoundEffect.Type getSpellSoundEffect() {
 		return SoundEffect.Type.ORB;
 	}
-
-	protected final int randomNumberWithinRange(int low, int high) {
-		int result = (int) (Math.random() * (high - low + 1)) + low;
-		return result;
-	}
 	
 }

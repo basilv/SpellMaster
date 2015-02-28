@@ -2,12 +2,17 @@ package com.basilv.minecraft.spellmaster.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import net.canarymod.Canary;
+import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.EntityType;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.inventory.PlayerInventory;
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.nbt.ListTag;
 import net.canarymod.api.nbt.StringTag;
 import net.canarymod.api.world.World;
@@ -278,6 +283,37 @@ public class MinecraftUtils {
 		block.getRelative(0, 0, -1).update();
 		block.getRelative(0, 1, 0).update();
 		block.getRelative(0, -1, 0).update();
+	}
+
+	public static int randomNumberWithinRange(int low, int high) {
+		int result = (int) (Math.random() * (high - low + 1)) + low;
+		return result;
+	}
+
+	public static void createXpOrb(Location entityLocation) {
+		Location spawnLocation = entityLocation.copy();
+		spawnLocation.setX(spawnLocation.getX() + randomNumberWithinRange(0, 2)-1);
+		spawnLocation.setY(spawnLocation.getY() + 1);
+		spawnLocation.setZ(spawnLocation.getZ() + randomNumberWithinRange(0, 2)-1);
+		Entity xp = Canary.factory().getEntityFactory().newEntity(EntityType.XPORB, spawnLocation);
+		xp.spawn();
+		CompoundTag nbt = xp.getNBT();
+		nbt.put("Value", (short)1); // XP value of the orb
+		xp.setNBT(nbt);
+	}
+
+	public static void dropXpOrbs(LivingBase entity) {
+		// TODO: This is an approximation.
+		int numOrbs = 0;
+		if (entity.getEntityType().isAnimal()) {
+			numOrbs = 1;
+		} else if (entity.getEntityType().isMob()) {
+			numOrbs = 3;
+		}
+		
+		IntStream.range(0, numOrbs).forEach(i -> {
+			createXpOrb(entity.getLocation());
+		});
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.basilv.minecraft.spellmaster.spells.experimental;
+package com.basilv.minecraft.spellmaster.spells;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,15 +16,15 @@ public class ControlWeatherSpell extends AirSpell {
 	public ControlWeatherSpell() {
 		super("Control Weather");
 		setCastingMinimumLevel(5);
-		setCastingFocus("Large Fern", ItemType.LargeFern); // TODO: Figure out proper component.
-//		setCastingComponent(ItemType.Feather, "Feather", 2); // TODO: Consider using more exotic item? Lapis?
+		setCastingFocus("Sunflower or blue orchid", ItemType.Sunflower, ItemType.BlueOrchid); // Sunflower on its own is too rare.
+		// No need for a component: focus is rare enough and spell on its own is not really that powerful.
 	}
 	
 
 	@Override
 	protected void populateSpellSpecificCastingInformation(List<String> lines) {
 		lines.addAll(Arrays.asList(
-		   "Duration: level * 2 seconds", 
+		   "Duration: level * 2 seconds (if making weather raining or stormy", 
 		   "Change the weather from sunny to raining, from raining to stormy, and from stormy to sunny."
 		));
 	}

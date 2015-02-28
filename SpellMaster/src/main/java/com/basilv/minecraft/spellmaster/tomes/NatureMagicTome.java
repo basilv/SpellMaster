@@ -42,7 +42,7 @@ public class NatureMagicTome extends Tome {
 		super("Nature Magic", 1);
 		setCeremonyFocus("One of the flowers in the arrangement", 
 			ItemType.YellowFlower, ItemType.Poppy, ItemType.BlueOrchid, ItemType.Allium, ItemType.AzureBluet, ItemType.Lilac, ItemType.OxeyeDaisy,
-			ItemType.Peony, ItemType.RoseBush, ItemType.RedTulip, ItemType.OrangeTulip, ItemType.WhiteTulip, ItemType.PinkTulip);
+			ItemType.Peony, ItemType.RoseBush, ItemType.RedTulip, ItemType.OrangeTulip, ItemType.WhiteTulip, ItemType.PinkTulip, ItemType.Sunflower);
 		setSpellBoost(new SpellBoost(0, 0, 0, 1, 0));
 		
 		addSpell(new DecomposeTreeSpell());

@@ -16,8 +16,8 @@ import net.canarymod.api.world.position.Position;
 import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.MagicMissileSpell;
 import com.basilv.minecraft.spellmaster.spells.TeleportSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.GuidedMissileSpell;
 
 public class WizardTome extends Tome {
 
@@ -31,7 +31,7 @@ public class WizardTome extends Tome {
 		// use armor for different effects: chestplate - invulnerability, boots - teleport, etc.
 
 		addSpell(new TeleportSpell());
-		addSpell(new GuidedMissileSpell());
+		addSpell(new MagicMissileSpell());
 
 		addTome(new AirMagicTome());
 		addTome(new FireMagicTome());

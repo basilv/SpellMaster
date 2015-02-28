@@ -36,7 +36,7 @@ public abstract class AbstractTeleportSpell extends Spell {
 			return false;
 		} else {
 			Player player = context.getPlayer();
-			Canary.getServer().addSynchronousTask(new OneTimeServerTask(MinecraftUtils.secondsToTicks(randomNumberWithinRange(1, 2))) {
+			Canary.getServer().addSynchronousTask(new OneTimeServerTask(MinecraftUtils.secondsToTicks(MinecraftUtils.randomNumberWithinRange(1, 2))) {
 				@Override
 				public void doTask() {
 					teleportPlayerToPosition(player, position);

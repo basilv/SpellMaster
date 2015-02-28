@@ -11,9 +11,9 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.Spell;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
+import com.basilv.minecraft.spellmaster.spells.ControlWeatherSpell;
 import com.basilv.minecraft.spellmaster.spells.FlightSpell;
 import com.basilv.minecraft.spellmaster.spells.LightningBoltSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.ControlWeatherSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class AirMagicTome extends Tome {
