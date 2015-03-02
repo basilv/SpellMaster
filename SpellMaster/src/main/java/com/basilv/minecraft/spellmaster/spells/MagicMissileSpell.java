@@ -45,11 +45,8 @@ public class MagicMissileSpell extends Spell {
 		Player player = context.getPlayer();
 		int maxRange = context.getCastingRange(0, 1);
 		Entity entity = player.getTargetLookingAt(maxRange);
-		if (entity == null) {
-			return false;
-		}
-		
-		if (!(entity instanceof EntityLiving)) {
+		if (entity == null || !(entity instanceof EntityLiving)) {
+			sendPlayerUnableToCastMessage(player, "Must target a creature.");
 			return false;
 		}
 		

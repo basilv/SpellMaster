@@ -203,6 +203,10 @@ public abstract class Spell extends NamedObject {
 
 		MinecraftUtils.spawnParticleInFrontOfPlayer(player, Particle.Type.SPELL);
 		
+		playSpellSound(player);
+	}
+
+	protected final void playSpellSound(Player player) {
 		Location playerLocation = player.getLocation();
 		float volume = 1.0f;
 		float pitch = 1.0f;

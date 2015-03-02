@@ -25,7 +25,7 @@ public class WizardTome extends Tome {
 		super("Wizard Magic", 2); 
 		setCeremonyFocus("Book", ItemType.Book); 
 		setCeremonyComponent("Lapis lazuli block", ItemType.LapisBlock, 1); 
-		setSpellBoost(new SpellBoost(1, 0, 0, 0, 1));
+		setSpellBoost(new SpellBoost(1, 0, 0, 0, 0));
 		
 		// TODO: Experimental spells
 		// use armor for different effects: chestplate - invulnerability, boots - teleport, etc.
@@ -42,7 +42,7 @@ public class WizardTome extends Tome {
 	@Override
 	protected List<String> getBookIntroduction() {
 		return Arrays.asList("Learn more powerful magic as a wizard."
-			,"" , "Boost: +1 casting level, -1 exhaustion"); 
+			,"" , "Boost: +1 casting level"); 
 	}
 
 	@Override

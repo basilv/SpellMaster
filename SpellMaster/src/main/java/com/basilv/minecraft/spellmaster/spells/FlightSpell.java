@@ -26,6 +26,8 @@ public class FlightSpell extends Spell {
 		setCastingFocus("2 Feathers", ItemType.Feather);
 		setCastingComponent("Feather", ItemType.Feather, 2); // TODO: Consider using more exotic item?
 		// TODO: Should there be a greater spell cost?
+		// TODO: Spell is to powerful at level 30+. Fly too fast, last too long. Add better flight spell in elemental mastery book
+		// Synergy with greater teleport to get to surface
 	}
 	
 	@Override
@@ -44,6 +46,7 @@ public class FlightSpell extends Spell {
 		   "Fly speed: 0.01 / 4 levels",
 		   "Allows you to fly for a limited time. The spell ends without warning and you can take falling damage if still in the air."
 //		   "In addition to the regular casting cost, this costs one level to cast" // TODO: Evaluate if this should be done. Too easy to fight monsters from the air, surmount End start, etc.
+		   // TODO: Add exhaustion over time.
 		));
 	}
 	
@@ -99,7 +102,6 @@ public class FlightSpell extends Spell {
 	    	float defaultFlySpeed = 0.05f;
 	    	capabilities.setFlySpeed(defaultFlySpeed);
 	    	player.updateCapabilities();
-	        Canary.getServer().removeSynchronousTask(this);
 	    }
 	}
 	

@@ -14,6 +14,7 @@ import com.basilv.minecraft.spellmaster.Tome;
 import com.basilv.minecraft.spellmaster.spells.ControlWeatherSpell;
 import com.basilv.minecraft.spellmaster.spells.FlightSpell;
 import com.basilv.minecraft.spellmaster.spells.LightningBoltSpell;
+import com.basilv.minecraft.spellmaster.spells.WindGustsSpell;
 import com.basilv.minecraft.spellmaster.util.MinecraftUtils;
 
 public class AirMagicTome extends Tome {
@@ -44,9 +45,7 @@ public class AirMagicTome extends Tome {
 		addSpell(new ControlWeatherSpell());
 		addSpell(new LightningBoltSpell());
 		addSpell(new FlightSpell());
-		
-		// TODO: Wind wall, focus: large fern or lilypad? (what then is control weather focus? Maybe sunflower?). Problem is sunflower and large fern are hard to get.
-		// Gust of wind: push all mobs away from you.
+		addSpell(new WindGustsSpell());
 	}
 
 	@Override

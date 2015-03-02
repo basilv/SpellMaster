@@ -29,7 +29,7 @@ public class WallOfStoneSpell extends EarthMagicTome.EarthSpell {
 		lines.addAll(Arrays.asList(
 			"Component: 1 cobblestone for each block created in the wall.",
 			"Range: 1 square + 1 / 4 levels.",
-			"Conjure a stone wall directly in front of you, extending to each side up to the maximum range. "
+			"Conjure a permanent stone wall directly in front of you, extending to each side up to the maximum range. "
 			+ "The wall is conjured out of thin air and does not affect existing blocks. "
 			+ "The wall extends from one block below you to a height of one block higher than you. "
 		));
