@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.ItemType;
+import net.canarymod.api.world.DimensionType;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Position;
@@ -47,11 +48,10 @@ public class GreaterTeleportSpell extends AbstractTeleportSpell {
 		logger.info("Range in blocks = " + rangeInBlocks);
 		Position position = getInitialTargetPosition(player, rangeInBlocks);
 		World world = context.getWorld();
+		int maxHeight = getMaxHeight(world);
 		while(!canPlayerTeleportToPosition(world, position)) {
 			position.moveY(+1);
-			// TODO: This is flawed - placed me on top of bedrock on top of Nether.
-			if (position.getBlockY() > 255) {
-				// At maximum height so abort teleport
+			if (position.getBlockY() >= maxHeight-1) { // -1 is to allow space for player's upper body
 				player.message("Destination is occupied by solid material.");
 				return null;
 			}
@@ -63,6 +63,14 @@ public class GreaterTeleportSpell extends AbstractTeleportSpell {
 		}
 		
 		return position;
+	}
+
+	private int getMaxHeight(World world) {
+		int maxHeight = 256;
+		if (world.getType().equals(DimensionType.NETHER)) {
+			maxHeight = 128;
+		}
+		return maxHeight;
 	}
 
 	private int getRangeInBlocks(MagicContext context) {
