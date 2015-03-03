@@ -49,6 +49,7 @@ public class GreaterTeleportSpell extends AbstractTeleportSpell {
 		World world = context.getWorld();
 		while(!canPlayerTeleportToPosition(world, position)) {
 			position.moveY(+1);
+			// TODO: This is flawed - placed me on top of bedrock on top of Nether.
 			if (position.getBlockY() > 255) {
 				// At maximum height so abort teleport
 				player.message("Destination is occupied by solid material.");

@@ -10,7 +10,9 @@ import net.canarymod.Canary;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.factory.ItemFactory;
 import net.canarymod.api.inventory.Item;
+import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.nbt.BaseTag;
 import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.world.blocks.Block;
@@ -176,7 +178,55 @@ public class SpellMasterCommands implements CommandListener {
 		return name;
 	}
 
+	
 	// TODO: Commands for debugging - eventually remove or move to another plugin.
+	@Command(aliases = { "stock" }, description = "Stock inventory of player", permissions = { "*" }, toolTip = "/stock")
+	public void stockCommand(MessageReceiver caller, String[] parameters) {
+		if (caller instanceof Player) {
+			Player player = (Player) caller;
+			ItemFactory itemFactory = Canary.factory().getItemFactory();
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.DiamondSword));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Bow));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Torch, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Steak, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Cobble, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Sand, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.IronBoots));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.StoneSpade));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.StonePickaxe, 0, 3));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Stick, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.DiamondBoots));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.DiamondChestplate));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.DiamondHelmet));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.DiamondLeggings));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.IronPickaxe));
+
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Bed));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Compass));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Arrow, 0, 64));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.Workbench));
+			giveItemIfNeeded(player, itemFactory.newItem(ItemType.WaterBucket));
+			
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Earth Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Water Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Nature Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Wizard Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Air Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Fire Magic"});
+			giveTomeCommand(caller, new String[] {"givetome", "@p", "Archmage Magic"});
+		}
+	}
+	
+	private void giveItemIfNeeded(Player player, Item item) {
+		Item itemPossessed = player.getInventory().getItem(item.getType());
+		if (itemPossessed == null) {
+			player.giveItem(item);
+		} else {
+			itemPossessed.setAmount(item.getAmount());
+		}
+	}
+	
+	
 	@Command(aliases = { "inspectItem" }, description = "Inspect item player is holding", permissions = { "*" }, toolTip = "/inspectItem")
 	public void inspectItemCommand(MessageReceiver caller, String[] parameters) {
 		if (caller instanceof Player) {

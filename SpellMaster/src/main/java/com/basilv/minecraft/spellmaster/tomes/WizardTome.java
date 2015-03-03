@@ -35,7 +35,7 @@ public class WizardTome extends Tome {
 
 		addTome(new AirMagicTome());
 		addTome(new FireMagicTome());
-		// TODO: Necromany tome 
+		// TODO: Necromancy tome 
 		addTome(new ArchmageTome());
 	}
 
