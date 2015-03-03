@@ -57,11 +57,14 @@ public abstract class AbstractTeleportSpell extends Spell {
 		Position positionAdjustment = MinecraftUtils.getPositionAdjustmentForDirectionPlayerFacing(player);
 		Position position = player.getPosition().copy();
 		position.move(positionAdjustment.getBlockX() * rangeInBlocks, 0, positionAdjustment.getBlockZ() * rangeInBlocks);
+		
+		// Ensure that player ends up centered on block to avoid getting covered by surrounding blocks. 
+		position = new Position(0.5 + position.getBlockX(), position.getBlockY(), 0.5 + position.getBlockZ());
 		return position;
 	}
 	
 	private void teleportPlayerToPosition(Player player, Position position) {
-		player.teleportTo(position.getBlockX(), position.getBlockY(), position.getBlockZ(), player.getPitch(), player.getRotation());
+		player.teleportTo(position.getX(), position.getY(), position.getZ(), player.getPitch(), player.getRotation());
 	}
 
 	protected final boolean canPlayerTeleportToPosition(World world, Position positionToCheck) {

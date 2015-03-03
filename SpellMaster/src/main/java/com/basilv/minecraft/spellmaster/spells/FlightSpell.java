@@ -15,20 +15,20 @@ public class FlightSpell extends AbstractFlightSpell {
 	@Override
 	protected void populateSpellSpecificCastingInformation(List<String> lines) {
 		lines.addAll(Arrays.asList(
-		   "Duration: level - 15 seconds",
-		   "Fly speed: 0.01 / 4 levels",
+		   "Duration: 1 second per 2 levels - 5",
+		   "Fly speed: 0.003 per 5 levels",
 		   "Allows you to fly for a limited time. The spell ends without warning and you can take falling damage if still in the air.",
 		   "Maintaining this spell requires that effort be spent throughout the duration."
 		));
 	}
 	
 	protected int getDurationInSeconds(MagicContext context) {
-		return context.getCastingLevel() - 15 + context.getSpellboost().getDurationInSeconds();
+		return context.getCastingLevel() / 2 - 5 + context.getSpellboost().getDurationInSeconds();
 	}
 
 	protected float getFlightSpeed(MagicContext context) {
-		// Fly speed of 0.02 at minimum casting level, which is much slower than walking speed.
-		return (float) (0.01 * context.getCastingLevel() / 10.0);
+		// Fly speed of 0.012 at minimum casting level, which is much slower than walking speed.
+		return (float) (0.003 * context.getCastingLevel() / 5);
 	}
 
 }

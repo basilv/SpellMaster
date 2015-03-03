@@ -79,7 +79,7 @@ public abstract class AbstractFlightSpell extends AirSpell {
 		private int durationRemainingInSeconds;
 
 	    public OngoingFlightTask(MagicContext context, int durationInSeconds) {
-			super(Canary.getServer(), MinecraftUtils.secondsToTicks(1));
+			super(Canary.getServer(), MinecraftUtils.secondsToTicks(1), true);
 			this.context = context;
 			this.durationRemainingInSeconds = durationInSeconds;
 		}

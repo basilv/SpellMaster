@@ -47,7 +47,9 @@ public class WaterMagicTome extends Tome {
 		// Water wave
 		// Flood
 		// Earth to mud
-		// Absorb Water (or should this be in fire magic - vaporize water)
+		// Spring (create a flowing water block)
+		
+
 //		ItemType.ClownFish
 //		ItemType.FishingRod
 //		ItemType.Ice

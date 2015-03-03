@@ -15,6 +15,7 @@ import com.basilv.minecraft.spellmaster.Tome;
 import com.basilv.minecraft.spellmaster.spells.DetectOreSpell;
 import com.basilv.minecraft.spellmaster.spells.FasterFlightSpell;
 import com.basilv.minecraft.spellmaster.spells.GreaterTeleportSpell;
+import com.basilv.minecraft.spellmaster.spells.experimental.DragonsBreathSpell;
 
 public class ArchmageTome extends Tome {
 
@@ -28,6 +29,7 @@ public class ArchmageTome extends Tome {
 		addSpell(new GreaterTeleportSpell());
 		
 		addSpell(new FasterFlightSpell()); // TODO: Move to Elemental Mastery book
+		addSpell(new DragonsBreathSpell()); // TODO: Move to Elemental Mastery book
 		// TODO: majestic mansion spell?
 	}
 

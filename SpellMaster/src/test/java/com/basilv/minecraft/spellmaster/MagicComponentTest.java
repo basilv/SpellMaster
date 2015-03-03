@@ -32,5 +32,4 @@ public class MagicComponentTest {
 		assertEquals("3 Sticks", threeStickComponent.toString());
 	}
 	
-	// TODO: Test consumeForUser
 }

@@ -3,7 +3,6 @@ package com.basilv.minecraft.spellmaster;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Registry of all magic tomes.
@@ -26,12 +25,4 @@ public class TomeRegistry {
 		return tomeRegistryByName.values();
 	}
 
-	// TODO: Not used, remove?
-	public static Optional<Spell> getSpellForName(String name) {
-		return tomeRegistryByName.values().stream()
-			.flatMap(tome -> tome.getSpells().stream())
-			.filter(spell -> spell.getName().equals(name))
-			.findFirst();
-	}
-	
 }

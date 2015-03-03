@@ -47,12 +47,6 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 		
 		IntroductorySpellcastingTome introTome = new IntroductorySpellcastingTome();
 		TomeRegistry.addTome(introTome);
-		// TODO: Experimental spells - remove
-		// Create light spell with focus: sunflower or stick (YellowFlower item type)
-		// Higher level books reuse stick, but with more powerful spell?
-//		introTome.addSpell(new LightSpell()); 
-//		introTome.addSpell(new SummonZombieSpell());
-//		introTome.addSpell(new CreateSnowGolemSpell());
 
 		return true;
 	}
@@ -62,7 +56,7 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 		Canary.getServer().removeSynchronousTask(spellExhaustionTask);
 	}
 
-	@HookHandler // TODO: Test
+	@HookHandler 
 	public void onPlayerConnection(ConnectionHook hook) {
 		if (hook.isFirstConnection()) {
 			welcomePlayer(hook.getPlayer());
@@ -76,6 +70,7 @@ public class SpellMasterPlugin extends Plugin implements PluginListener {
 
 	private void welcomePlayer(Player player) {
 		String tomeName = IntroductorySpellcastingTome.NAME;
+		
 		TomeRegistry.getTomeForName(tomeName).giveTomeToPlayer(player);
 
 		player.message("Welcome, apprentice.");
