@@ -56,7 +56,6 @@ public class WizardTome extends Tome {
 			"Requirements: Use the focus with at least two of the following tomes in your inventory: Earth Magic, Nature Magic, Water Magic. "
 			+ "You must be standing on a gold block surrounded by iron blocks on its four sides and with redstone blocks at each of the corners of the gold block. "
 			+ "The space above all of these blocks must be completely clear (i.e. air) all the way to the sky. "
-//			+ "After using the focus you must cast X different spells within Y seconds and then use the focus again." // TODO: Get this working.
 		));
 	}
 	

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
@@ -218,7 +219,10 @@ public abstract class Tome extends NamedObject implements Ceremony.CeremonyCapab
 		if (ceremonyComponent != null) {
 			ceremonyComponent.consumeForUse(player);
 		}
-		player.removeLevel(getCeremonyLevelCost());
+		// Need to use server command because player.removeLevel() is not working.
+		int levelCost = getCeremonyLevelCost();
+		String command = "xp -" + levelCost + "L " + player.getName();
+		Canary.getServer().consoleCommand(command);
 	}
 
 	/**
