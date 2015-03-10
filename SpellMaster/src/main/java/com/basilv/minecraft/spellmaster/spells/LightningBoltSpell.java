@@ -31,7 +31,7 @@ public class LightningBoltSpell extends Spell {
 		// Increasing damage in rain/storm is designed to be boosted by Control Weather spell.
 		lines.addAll(Arrays.asList(
 		   "Range: 3 squares + 1 per 2 levels",
- 		   "Damage: 4 to 8 + 1 per 5 levels. +3 damage when raining, +7 damage in a thunderstorm",
+ 		   "Damage: 4 to 8 + 1 per 5 levels. +3 damage when raining, +6 damage in a thunderstorm",
 		   "Blast target entity or block with lightning. Deals full damage to target entity and decreasing damage to entities further away."
 		));
 	}
@@ -90,7 +90,7 @@ public class LightningBoltSpell extends Spell {
 	private int calculateDamageAtTargetPoint(MagicContext context) {
 		int damage = MinecraftUtils.randomNumberWithinRange(4, 8) + context.getCastingLevel() / 5 + context.getSpellboost().getDamage();
 		if (context.getWorld().isThundering()) {
-			damage += 7;
+			damage += 6;
 		} else if (context.getWorld().isRaining()) {
 			damage += 3;
 		}
