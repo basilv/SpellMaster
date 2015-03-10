@@ -15,9 +15,9 @@ import com.basilv.minecraft.spellmaster.MagicContext;
 import com.basilv.minecraft.spellmaster.SpellBoost;
 import com.basilv.minecraft.spellmaster.Tome;
 import com.basilv.minecraft.spellmaster.spells.DetectOreSpell;
+import com.basilv.minecraft.spellmaster.spells.DragonsBreathSpell;
 import com.basilv.minecraft.spellmaster.spells.FasterFlightSpell;
 import com.basilv.minecraft.spellmaster.spells.GreaterTeleportSpell;
-import com.basilv.minecraft.spellmaster.spells.experimental.DragonsBreathSpell;
 
 public class ArchmageTome extends Tome {
 
