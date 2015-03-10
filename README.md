@@ -1,6 +1,8 @@
 # SpellMaster Plugin
-Minecraft CanaryMod server (http://canarymod.net/) plugin for gaining spellcasting abilities. 
-Players gain spellcasting abilities through performing ceremonies to acquire tomes of magic that contain spells.
+
+In Minecraft have you always wanted to cast powerful spells to disintegrate the earth, fly through the sky, or summon fireballs to hurl at your foes? Did you want to gain mastery of the elements and bend them to your will? If you are willing to put in the dedication and sacrifice necessary to master and cast such spells then welcome, apprentice.
+
+SpellMaster is a plugin for the Minecraft CanaryMod server (http://canarymod.net/). Players gain spellcasting abilities through performing ceremonies to acquire tomes of magic that contain spells.
 
 ## Spellcasting Basics
 Once you have a magic tome in your inventory you may cast the spells it contains. 
