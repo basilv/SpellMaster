@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.basilv.minecraft</groupId>
   <artifactId>SpellMaster</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <name>Spell Master Plugin</name>
   <description>Plugin providing spellcasting abilities for CanaryMod Minecraft server</description>
   <packaging>jar</packaging>
